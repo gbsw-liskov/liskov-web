@@ -12,6 +12,7 @@ export default function Router(){
         <Route path="/analyze" element={<R.Analyze />} />
         <Route path="/checklist" element={<R.ChecklistPage />} />
         <Route path="/profile" element={<R.Profile />} />
+        <Route path="/map" element={<R.MapPage />} />
         <Route path="*" element={<R.NotFound />} />
       </Routes>
     </>
