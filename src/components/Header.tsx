@@ -40,23 +40,23 @@ export default function Header() {
 
         </div>
         {isLogined ?
-          <>
-            <img src={Person} alt="사람 아이콘" />
-            <p className="pl-3 text-[18px] cursor-pointer">{username}</p>
-          </>
+        <div className="flex items-center h-8" onClick={() => navigate("/profile")}>
+          <img src={Person} alt="사람 아이콘" />
+          <p className="pl-3 text-[18px] cursor-pointer">{username}</p>
+        </div>
         :
-          <>
-            <p 
-              className={`text-[18px] cursor-pointer transition-all duration-200 ${
-                location.pathname === '/signin' 
-                  ? "text-[#58CCFF]" 
-                  : "text-black"
-              }`}
-              onClick={() => navigate('/signin')}
-            >
-              로그인
-            </p>
-          </>
+            <div className="flex items-center h-8" onClick={() => navigate("/profile")}>
+              <p 
+                className={`text-[18px] cursor-pointer transition-all duration-200 ${
+                  location.pathname === '/signin' 
+                    ? "text-[#58CCFF]" 
+                    : "text-black"
+                }`}
+                onClick={() => navigate('/signin')}
+              >
+                로그인
+              </p>
+            </div>
         }
       </div>
     </div>

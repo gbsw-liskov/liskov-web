@@ -1,9 +1,11 @@
 import { Logo } from '@/assets/index';
 import Input from './field/Input';
 import { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -21,7 +23,14 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 추후 api 연결 로그인 로직 추가
+
+    if (!form.username.trim() || !form.password.trim()) {
+      toast.error("아이디와 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+    localStorage.setItem("accessToken", "대충 토큰 내용");
+    navigate('/');
+    toast.success("로그인에 성공했습니다!");
   };
 
   return (
@@ -58,7 +67,15 @@ export default function SignIn() {
             </button>
           </form>
           <div className="flex w-full mt-[35px] justify-center">
-            <p className="flex text-[14px] font-medium">계정이 없으신가요?<span className="pl-[10px] font-bold cursor-pointer text-[#3A98FF]">회원가입</span></p>
+            <p className="flex text-[14px] font-medium">
+              계정이 없으신가요?
+              <span
+                onClick={() => navigate('/signup')}
+                className="pl-[10px] font-bold cursor-pointer text-[#3A98FF]"
+              >
+                회원가입
+              </span>
+            </p>
           </div>
         </div>
       </div>
