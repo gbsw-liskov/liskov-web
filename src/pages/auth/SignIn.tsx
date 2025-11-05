@@ -7,12 +7,12 @@ import toast from 'react-hot-toast';
 export default function SignIn() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    username: '',
+    userid: '',
     password: '',
   });
 
   const fields = [
-    { label: '아이디', name: 'username', placeholder: '아이디를 입력해주세요', type: 'text' },
+    { label: '아이디', name: 'userid', placeholder: '아이디를 입력해주세요', type: 'text' },
     { label: '비밀번호', name: 'password', placeholder: '비밀번호를 입력해주세요', type: 'password' },
   ];
 
@@ -24,7 +24,7 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.username.trim() || !form.password.trim()) {
+    if (!form.userid.trim() || !form.password.trim()) {
       toast.error("아이디와 비밀번호를 모두 입력해주세요.");
       return;
     }
