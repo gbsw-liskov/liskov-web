@@ -24,8 +24,11 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.userid.trim() || !form.password.trim()) {
-      toast.error("아이디와 비밀번호를 모두 입력해주세요.");
+    if (!form.userid.trim()) {
+      toast.error("아이디를 입력해주세요.");
+      return;
+    } else if(!form.password.trim()) {
+      toast.error("비밀번호를 입력해주세요.");
       return;
     }
     localStorage.setItem("accessToken", "대충 토큰 내용");
