@@ -3,5 +3,6 @@ import Person from './person.svg'
 import House1 from './one-room-house.png'
 import House2 from './apart-house.png'
 import House3 from './city-map.png';
+import House from './house.png';
 
-export { Logo, Person, House1, House2, House3 }
+export { Logo, Person, House1, House2, House3, House }
