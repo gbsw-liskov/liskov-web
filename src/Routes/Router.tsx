@@ -9,11 +9,15 @@ export default function Router(){
         <Route path="/" element={<R.Home />} />
         <Route path="/signin" element={<R.SignIn />} />
         <Route path="/signup" element={<R.SignUp />} />
-        <Route path="/analyze" element={<R.Analyze />} />
-        <Route path="/checklist" element={<R.ChecklistMain />} />
-        <Route path="/checklist/add" element={<R.CheckListAdd />} />
         <Route path="/profile" element={<R.Profile />} />
+        <Route path="/analyze" element={<R.Analyze />} />
         <Route path="/map" element={<R.MapPage />} />
+        <Route path="/checklist/confirm" element={<R.CheckList /> } />
+        <Route path="/checklist" element={<R.CheckListMain />} />
+        <Route path="/checklist/create" element={<R.CheckListCreate />} />
+        <Route path="/checklist/add" element={<R.CheckListAdd />} />
+        <Route path="/ai/loading" element={<R.AILoading />} />
+        <Route path="/ai/createlist" element={<R.AIGeneratedList />} />
         <Route path="*" element={<R.NotFound />} />
       </Routes>
     </>

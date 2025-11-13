@@ -1,12 +1,17 @@
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { Header } from '@/components/index';
 import Router from '@/Routes/Router';
 
-export default function App() {
+function AppWrapper() {
+  const location = useLocation();
+  const noHeaderPaths = ["/ai/loading", "/ai/createlist", "/checklist/confirm"];
+
+  const showHeader = !noHeaderPaths.includes(location.pathname);
+
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {showHeader && <Header />}
       <Router />
       <Toaster 
         position="top-center"
@@ -17,6 +22,14 @@ export default function App() {
           }
         }}
       />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppWrapper />
     </BrowserRouter>
   );
 }
