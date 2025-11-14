@@ -4,6 +4,6 @@ import House1 from './one-room-house.png'
 import House2 from './apart-house.png'
 import House3 from './city-map.png';
 import House from './house.png';
-import AiLoading from './ai-loading.png';
+import Ai from './ai.png';
 
-export { Logo, Person, House1, House2, House3, House, AiLoading }
+export { Logo, Person, House1, House2, House3, House, Ai }

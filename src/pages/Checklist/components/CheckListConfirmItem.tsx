@@ -1,4 +1,4 @@
-import { FaCheck, FaExclamation, FaExclamationTriangle } from "react-icons/fa";
+import { FaCheck, FaExclamation, FaExclamationTriangle, FaMinus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
 interface CheckListConfirmItemProps {
@@ -66,7 +66,11 @@ export default function CheckListConfirmItem({
           </div>
         );
       default:
-        return null;
+        return (
+          <div className="w-8 h-8 rounded-full bg-[#A0A0A0] flex items-center justify-center">
+            <FaMinus size={14} color="white" />
+          </div>
+        );
     }
   };
 

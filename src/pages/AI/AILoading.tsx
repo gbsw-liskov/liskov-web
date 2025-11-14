@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiLoading } from "@/assets";
+import { Ai } from "@/assets";
 
 export default function AILoading() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function AILoading() {
     <div className="flex flex-col items-center justify-center min-w-full min-h-screen">
       <img
         className="w-[186px] h-[186px] animate-spin-slow"
-        src={AiLoading}
+        src={Ai}
         alt="로딩 아이콘"
       />
       <h1 className="text-4xl font-bold text-black pt-[98px] leading-normal text-center">

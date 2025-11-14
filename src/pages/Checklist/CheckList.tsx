@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { savedChecklists } from "@/mock/mock";
-import CheckListConfirmItem from "./components/CheckListConfirmItem";
+import * as C from './components'
 import { useState, useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -8,14 +8,14 @@ interface ChecklistItem {
   id: number;
   text: string;
   checked: boolean;
-  level?: 'safe' | 'warning' | 'danger' | null;
+  level?: "safe" | "warning" | "danger" | null;
   memo?: string;
 }
 
 export default function CheckList() {
   const navigate = useNavigate();
   const checklistId = localStorage.getItem("currentChecklistId");
-  
+
   const [checklist, setChecklist] = useState<{
     id: number;
     houseName: string;
@@ -29,23 +29,27 @@ export default function CheckList() {
       return;
     }
 
-    const found = savedChecklists.find(c => c.id === Number(checklistId));
+    const found = savedChecklists.find((c) => c.id === Number(checklistId));
     if (found) {
       setChecklist({
         id: found.id,
         houseName: found.houseName,
         items: found.items,
-        isConfirmed: found.isConfirmed || false
+        isConfirmed: found.isConfirmed || false,
       });
     } else {
       navigate("/checklist");
     }
   }, [checklistId, navigate]);
 
-  const handleSaveItem = (itemId: number, level: 'safe' | 'warning' | 'danger' | null, memo: string) => {
+  const handleSaveItem = (
+    itemId: number,
+    level: "safe" | "warning" | "danger" | null,
+    memo: string
+  ) => {
     if (!checklist) return;
 
-    const updatedItems = checklist.items.map(item =>
+    const updatedItems = checklist.items.map((item) =>
       item.id === itemId ? { ...item, level, memo } : item
     );
 
@@ -55,7 +59,9 @@ export default function CheckList() {
   const handleConfirm = () => {
     if (!checklist) return;
 
-    const checklistIndex = savedChecklists.findIndex(c => c.id === checklist.id);
+    const checklistIndex = savedChecklists.findIndex(
+      (c) => c.id === checklist.id
+    );
     if (checklistIndex !== -1) {
       savedChecklists[checklistIndex].items = checklist.items;
       savedChecklists[checklistIndex].isConfirmed = true;
@@ -76,9 +82,7 @@ export default function CheckList() {
     );
   }
 
-  const displayItems = checklist.isConfirmed 
-    ? checklist.items.filter(item => item.checked) 
-    : checklist.items;
+  const displayItems = checklist.items;
 
   return (
     <div className="flex pt-[50px] justify-center min-w-full min-h-screen pb-20">
@@ -91,14 +95,14 @@ export default function CheckList() {
             <IoIosArrowBack size={20} />
           </button>
         )}
-        
+
         <h1 className="flex justify-center font-semibold text-[28px] text-black">
           {checklist.houseName}
         </h1>
-        
+
         <div className="grid grid-cols-2 gap-x-[36px] gap-y-[30px] pt-16">
           {displayItems.map((item) => (
-            <CheckListConfirmItem
+            <C.CheckListConfirmItem
               key={item.id}
               itemId={item.id}
               item={item.text}
@@ -111,7 +115,7 @@ export default function CheckList() {
         </div>
 
         <div className="flex justify-center gap-4 mt-16">
-          {!checklist.isConfirmed && (
+          {!checklist.isConfirmed ?  (
             <button
               onClick={handleConfirm}
               type="button"
@@ -119,6 +123,8 @@ export default function CheckList() {
             >
               확인
             </button>
+          ) : (
+            <C.AiReportButton />
           )}
         </div>
       </div>

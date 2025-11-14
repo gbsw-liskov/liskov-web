@@ -1,8 +1,8 @@
-import * as C from './components';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { savedChecklists } from '@/mock/mock';
-import { House } from '@/assets';
+import * as C from "./components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { savedChecklists } from "@/mock/mock";
+import { House } from "@/assets";
 
 interface ChecklistItem {
   id: number;
@@ -13,7 +13,7 @@ interface ChecklistItem {
 export default function AIGeneratedList() {
   const navigate = useNavigate();
   const index = localStorage.getItem("HouseIndex");
-  
+
   const [checklists, setChecklists] = useState<ChecklistItem[]>([
     { id: 1, text: "건물 외관 및 균열 상태 확인", checked: false },
     { id: 2, text: "누수 및 곰팡이 흔적 점검", checked: false },
@@ -25,8 +25,8 @@ export default function AIGeneratedList() {
   const [newItemText, setNewItemText] = useState("");
 
   const toggleCheck = (id: number) => {
-    setChecklists(prev =>
-      prev.map(item =>
+    setChecklists((prev) =>
+      prev.map((item) =>
         item.id === id ? { ...item, checked: !item.checked } : item
       )
     );
@@ -38,9 +38,9 @@ export default function AIGeneratedList() {
 
   const handleAddSubmit = () => {
     if (newItemText.trim()) {
-      setChecklists(prev => [
+      setChecklists((prev) => [
         ...prev,
-        { id: Date.now(), text: newItemText.trim(), checked: false }
+        { id: Date.now(), text: newItemText.trim(), checked: false },
       ]);
       setNewItemText("");
     }
@@ -53,22 +53,30 @@ export default function AIGeneratedList() {
   };
 
   const handleConfirm = () => {
+    const checkedItems = checklists.filter((item) => item.checked);
+
+    if (checkedItems.length === 0) {
+      alert("최소 1개 이상의 체크리스트를 선택해주세요.");
+      return;
+    }
+
     const houseName = `의성군 봉양면 화전리 ${index} 파랑채`;
-    const today = new Date().toISOString().split('T')[0];
-    
+    const today = new Date().toISOString().split("T")[0];
+
     const newChecklist = {
       id: Date.now(),
       houseIndex: index || "1",
       houseName: houseName,
       image: House,
       date: today,
-      items: checklists
+      items: checkedItems,
+      isConfirmed: false,
     };
-    
+
     savedChecklists.push(newChecklist);
-    
+
     localStorage.setItem("currentChecklistId", newChecklist.id.toString());
-    
+
     navigate("/checklist");
   };
 
@@ -78,7 +86,7 @@ export default function AIGeneratedList() {
         <h1 className="flex justify-center font-semibold text-[28px] text-black">
           의성군 봉양면 화전리 {index} 파랑채
         </h1>
-        
+
         <div className="grid grid-cols-2 gap-x-[36px] gap-y-[30px] pt-16">
           {checklists.map((item) => (
             <div key={item.id} className="flex items-start h-7">
@@ -89,7 +97,7 @@ export default function AIGeneratedList() {
               />
             </div>
           ))}
-          
+
           {isAdding ? (
             <div className="flex items-center gap-3 h-7">
               <div className="border-[1px] border-[#757575] min-w-6 min-h-6 bg-white rounded-lg" />
@@ -101,8 +109,8 @@ export default function AIGeneratedList() {
                 className="w-full text-[18px] font-medium outline-none"
                 autoFocus
                 onKeyPress={(e) => {
-                  if (e.key === 'Enter') handleAddSubmit();
-                  if (e.key === 'Escape') handleCancel();
+                  if (e.key === "Enter") handleAddSubmit();
+                  if (e.key === "Escape") handleCancel();
                 }}
                 onBlur={handleCancel}
               />
