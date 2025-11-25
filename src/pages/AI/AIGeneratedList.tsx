@@ -81,7 +81,7 @@ export default function AIGeneratedList() {
   };
 
   return (
-    <div className="flex pt-[50px] justify-center min-w-full min-h-screen pb-20">
+    <div className="flex pt-[50px] justify-center min-w-full min-h-screen">
       <div className="w-[882px] min-h-[758px]">
         <h1 className="flex justify-center font-semibold text-[28px] text-black">
           의성군 봉양면 화전리 {index} 파랑채

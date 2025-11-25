@@ -6,7 +6,7 @@ export default function ChecklistMain() {
   const navigate = useNavigate();
   const checklists = M.savedChecklists;
 
-  const addCheckList = () => navigate("/checklist/add");
+  const selectCheckList = () => navigate("/checklist/select");
   
   const onClickedHouse = (checklistId: number) => {
     localStorage.setItem("currentChecklistId", checklistId.toString());
@@ -30,7 +30,7 @@ export default function ChecklistMain() {
             ))}
           </div>
           <button
-            onClick={addCheckList}
+            onClick={selectCheckList}
             type="button"
             className="flex mx-auto w-[417px] py-4 rounded-[5px] justify-center items-center bg-[#58CCFF] font-semibold text-lg text-white"
           >
@@ -48,7 +48,7 @@ export default function ChecklistMain() {
             </>
           }
           buttonTitle="추가하기"
-          onclick={addCheckList}
+          onclick={selectCheckList}
         />
       )}
     </div>
