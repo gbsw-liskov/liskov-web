@@ -6,10 +6,9 @@ import Analyze from './pages/Analyze/Analyze';
 import NotFound from './pages/NotFound/NotFound';
 import CheckList from './pages/CheckList/CheckList';
 import CheckListMain from './pages/CheckList/CheckListMain';
-import CheckListAdd from './pages/CheckList/CheckListAdd';
+import CheckListSelect from './pages/CheckList/CheckListSelect';
 import CheckListCreate from './pages/CheckList/CheckListCreate';
-import AILoading from './pages/AI/AILoading';
 import AIGeneratedList from './pages/AI/AIGeneratedList';
 import MapPage from './pages/Map/MapPage';
 
-export { SignIn, SignUp, Profile, Home, Analyze, CheckList,  CheckListMain, CheckListCreate, CheckListAdd, MapPage, AILoading, AIGeneratedList, NotFound }
+export { SignIn, SignUp, Profile, Home, Analyze, CheckList,  CheckListMain, CheckListCreate, CheckListSelect, MapPage, AIGeneratedList, NotFound }
