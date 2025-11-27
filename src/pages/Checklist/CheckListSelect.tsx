@@ -45,6 +45,7 @@ export default function CheckListSelect() {
     <>
       <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px]">
         <div className="flex flex-col items-center w-full">
+          
           <h1 className="pb-10 text-[28px] font-semibold text-black">
             체크리스트 추가
           </h1>

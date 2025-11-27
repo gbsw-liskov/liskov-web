@@ -4,19 +4,19 @@ interface ItemProps{
   title: string,
   subTitle: string,
   data: string,
-  shape: number,
+  longshape?: boolean,
   imgNumber: number,
   onclick: () => void,
 }
 
 export default function BannerItem(
-  { title, subTitle, data, shape, imgNumber, onclick }: ItemProps
+  { title, subTitle, data, longshape = false, imgNumber, onclick }: ItemProps
 ){
 
   return(
     <>
-      {shape === 1 ? 
-        <div onClick={onclick} className="flex w-[266px] h-40 pt-7 pl-[22px] pr-4 justify-between cursor-pointer">
+      {!longshape ? 
+        <div onClick={onclick} className="flex rounded-[10px] bg-white w-[266px] h-40 pt-7 pl-[22px] pr-4 justify-between cursor-pointer">
           <div>
             <h1 className="text-[16px] text-black font-bold pb-[6px]">{title}</h1>
             <p className="text-xs font-medium text-[#757575] pb-6px]">{subTitle}</p>
@@ -27,7 +27,7 @@ export default function BannerItem(
           </div>
         </div>
         :
-        <div onClick={onclick} className="flex w-[552]px] h-40 pt-8 pl-[18px] pr-[30px] justify-between cursor-pointer">
+        <div onClick={onclick} className="flex rounded  -[10px] bg-white w-[552px] h-40 pt-8 pl-[18px] pr-[30px] justify-between cursor-pointer">
           <div>
             <h1 className="text-[18px] text-black font-bold pb-[22px]">{title}</h1>
             <p className="text-[14px] font-medium text-[#757575]">{subTitle}</p>

@@ -1,20 +1,102 @@
-import { CiSearch } from "react-icons/ci";
-import { useNavigate } from 'react-router-dom';
+import * as C from "./components";
+import * as Image from "@/assets";
 
-export default function Home(){
-  const navigate = useNavigate();
-  const bannerItem = [
-    { title: '원룸/투룸', subTitle: '나에게 딱 맞는 원룸 찾기', data: '주변 모든 원룸을 더 쉽게<br />찾아보세요!', shape: 1, imgNumber: 1, onclick:{ } },
-    { title: '아파트', subTitle: '나에게 딱 맞는 아파트 찾기', data: '회원님에게 딱 맞는 아파트<br />매물을 찾아보세요!', shape: 1, imgNumber: 2, onclick:{go2} },
-    { title: 'AI 맞춤 매물 추천을 통해 딱', subTitle: '나에게 딱 맞는 방 찾기', data: '', shape: 2, imgNumber: 3, onclick:{go3} },
+interface PopularItemType {
+  id: number;
+  image: string;
+  price: string;
+  houseType: string;
+  floor: string;
+  address: string;
+  description: string;
+}
+
+export default function Home() {
+  const popularItems: PopularItemType[] = Array.from(
+    { length: 8 },
+    (_, index) => ({
+      id: index + 1,
+      image: Image.House,
+      price: "월세 120",
+      houseType: "원룸",
+      floor: "1층 15평",
+      address: "의성군 봉양면 화전리 129 파랑채",
+      description: "깨끗하게 관리되어 있습니다",
+    })
+  );
+
+  const recentItems = [
+    {
+      id: 1,
+      image: Image.House,
+      houseType: "원룸",
+      floor: "1층 15평",
+      address: "의성군 봉양면 화전리 129 파랑채",
+      price: "월세 120",
+    },
+    {
+      id: 2,
+      image: Image.House,
+      houseType: "투룸",
+      floor: "2층 20평",
+      address: "의성군 봉양면 화전리 130 파랑채",
+      price: "월세 150",
+    },
   ];
-  return(
-    <div className="h-[545px] w-full pt-[78px] bg-[#F4FCFF] px52">
-      <div className="w-[798px] h-18 mx-auto">
-        <form>
-          
-        </form>
+
+  const handleItemClick = (id: number) => {
+    console.log("매물 클릭:", id);
+  };
+
+  const handleDetailClick = (id: number) => {
+    console.log("자세히 보기 클릭:", id);
+  };
+
+  return (
+    <div className="w-full bg-[#F4FCFF] pb-[55px]">
+      <div className="h-[545px] mt-20 px-52">
+        <C.Banner />
+      </div>
+
+      <div className="mt-20 w-[1135px] mx-auto">
+        <h1 className="text-black text-[28px] font-semibold">
+          🔥지금 가장 인기있는 <span className="text-[#58CCFF]">봉양면 </span>매물
+        </h1>
+        <div className="w-full h-[635px] grid grid-cols-4 gap-x-[25px] content-between mt-8">
+          {popularItems.map((item: PopularItemType) => (
+            <C.PopularItem
+              key={item.id}
+              image={item.image}
+              price={item.price}
+              houseType={item.houseType}
+              floor={item.floor}
+              address={item.address}
+              description={item.description}
+              onclick={() => handleItemClick(item.id)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-20 w-[1135px] mx-auto">
+        <h1 className="text-black text-[28px] font-semibold mb-8">
+          🔎 최근 가장 많이 찾는 <span className="text-[#58CCFF]">봉양면 </span>매물
+        </h1>
+        <div className="flex gap-[51px]">
+          {recentItems.map((item) => (
+            <C.RecentItem
+              key={item.id}
+              id={item.id}
+              image={item.image}
+              houseType={item.houseType}
+              floor={item.floor}
+              address={item.address}
+              price={item.price}
+              onDetailClick={() => handleDetailClick(item.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
-  )
+  );
 }
