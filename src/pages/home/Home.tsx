@@ -53,11 +53,8 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-white pb-[55px]">
-      <div className="h-[545px] mt-20 px-52">
-        <C.Banner />
-      </div>
-
+    <div className="w-full bg-white pb-[55px] overflow-hidden">
+      <C.Banner />
       <div className="mt-20 w-[1135px] mx-auto">
         <h1 className="text-black text-[28px] font-semibold">
           🔥지금 가장 인기있는 <span className="text-[#58CCFF]">봉양면 </span>매물

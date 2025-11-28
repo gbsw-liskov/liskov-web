@@ -67,8 +67,8 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex pt-[178px] justify-center min-w-full min-h-screen">
-      <div className="w-[540px] h-[538px]">
+    <div className="flex pt-[178px] justify-center min-w-full min-h-screen pb-[109px]">
+      <div className="w-[540px] h-[810px]">
         <div className="w-[100px] h-[82px] mx-auto">
           <img className="w-full h-[52px] mx-auto" src={Logo} alt="로고 사진" />
           <div className="flex justify-center mt-2">
