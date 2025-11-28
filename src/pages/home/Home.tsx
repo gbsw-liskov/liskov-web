@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-[#F4FCFF] pb-[55px]">
+    <div className="w-full bg-white pb-[55px]">
       <div className="h-[545px] mt-20 px-52">
         <C.Banner />
       </div>
@@ -62,7 +62,7 @@ export default function Home() {
         <h1 className="text-black text-[28px] font-semibold">
           🔥지금 가장 인기있는 <span className="text-[#58CCFF]">봉양면 </span>매물
         </h1>
-        <div className="w-full h-[635px] grid grid-cols-4 gap-x-[25px] content-between mt-8">
+        <div className="w-full h-[680px] grid grid-cols-4 gap-x-[25px] content-between mt-8">
           {popularItems.map((item: PopularItemType) => (
             <C.PopularItem
               key={item.id}
