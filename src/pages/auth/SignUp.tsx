@@ -1,5 +1,5 @@
 import { Logo } from '@/assets/index';
-import Input from './field/Input';
+import { Input } from './components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
