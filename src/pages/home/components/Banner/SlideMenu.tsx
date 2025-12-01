@@ -63,6 +63,33 @@ export default function SlideMenu() {
     }
   };
 
+  type SlideItem = { slideImage: string; title: string };
+  
+  const slideItems: SlideItem[] = [
+    {
+      slideImage: Image.SlideBar1,
+      title: "NH투자증권, 패밀리오피스 세미나 개최…부동산 이슈 점검",
+    },
+    {
+      slideImage: Image.SlideBar2,
+      title: "수익률 낮고 공실률 높아”…전북 부동산 경기 ‘최악’",
+    },
+    {
+      slideImage: Image.SlideBar3,
+      title: "최근 부동산 트렌드 ‘공공기여’…지역가치 상승 이끌어",
+    },
+    {
+      slideImage: Image.SlideBar4,
+      title: "수도권에 판교급 물량 더…정부 부동산 대책 '산으로 간다'",
+    },
+    {
+      slideImage: Image.SlideBar5,
+      title: "부동산 대출 조여 집값 잡기 특단…“서민 내집마련 위축”",
+    },
+  ];
+
+  const extendedMeta = [slideItems[slideItems.length-1], ...slideItems, slideItems[0]];
+
   return (
     <div className="w-[551px] h-[343px] overflow-hidden rounded-[5px] relative cursor-pointer">
       <div
@@ -75,14 +102,14 @@ export default function SlideMenu() {
           transition: "transform 0.6s ease",
         }}
       >
-        {extendedImages.map((src, i) => (
+        {extendedMeta.map((item, i) => (
           <div
-            key={i}
+            key={`${i}-${item.title}`}
             className="w-[551px] h-[343px] flex-shrink-0 bg-cover bg-center rounded-[5px]"
             style={{
               backgroundImage: `
                 linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%),
-                url(${src})
+                 url(${item.slideImage})
               `,
             }}
           >
@@ -98,7 +125,7 @@ export default function SlideMenu() {
 
               <div className="flex items-center justify-between pr-5">
                 <h1 className="text-white font-bold text-[17px]">
-                  NH투자증권, 패밀리오피스 세미나 개최…부동산 이슈 점검
+                  {item.title}
                 </h1>
 
                 <MdKeyboardArrowRight
