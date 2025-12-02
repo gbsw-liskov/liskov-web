@@ -41,14 +41,24 @@ export default function CheckListSelect() {
     navigate("/ai/createlist");
   };
 
+  const goSoodongAdd = () => {
+    navigate('/checklist/add')
+  }
   return (
     <>
       <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px]">
         <div className="flex flex-col items-center w-full">
-          
-          <h1 className="pb-10 text-[28px] font-semibold text-black">
-            체크리스트 추가
-          </h1>
+          <div className="relative flex items-center justify-center w-[790px] pb-10">
+            <h1 className="text-[28px] font-semibold text-black">
+              체크리스트 추가
+            </h1>
+            <p
+              onClick={goSoodongAdd}
+              className="absolute right-0 text-black text-[20px] font-medium cursor-pointer"
+            >
+              수동추가
+            </p>
+          </div>
           <div className="flex flex-col items-center w-full pb-20">
             {M.addMockHouses.map((item, index) => (
               <div key={index} className={index !== 0 ? "mt-5" : ""}>
