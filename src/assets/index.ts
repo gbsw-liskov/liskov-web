@@ -15,6 +15,7 @@ import Heart from './heart.png'
 import ClipBoard from './clipboard.png'
 import Passed from './passed.png'
 import PadMap from './padMapImage.png'
+import RecentHome from './recenthome.png';
 
 export {
   Logo,
@@ -34,4 +35,5 @@ export {
   ClipBoard,
   Passed,
   PadMap,
+  RecentHome,
 };
