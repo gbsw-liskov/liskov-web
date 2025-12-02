@@ -39,7 +39,7 @@ export default function RecentItem({
       className="w-[542px] h-[744px] flex flex-col justify-between bg-cover bg-center rounded-[5px] z-[1] relative"
       style={{ backgroundImage: `url(${image})` }}
     >
-      <div className="absolute z-[2] inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.4)_100%)]" />
+      <div className="w-[542px] h-[744px] absolute z-[2] inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.4)_100%)]" />
 
       <div className="flex justify-end p-[35px] z-[3]">
         <button onClick={handleLikeToggle} className="text-3xl">
