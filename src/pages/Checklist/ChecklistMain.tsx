@@ -1,12 +1,17 @@
 import * as M from "@/mock/mock";
 import { CheckListMenu, NoData } from "./components/index";
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import CheckListSelect from "./CheckListSelect";
 
 export default function ChecklistMain() {
+  const [listSelect, setListSelect] = useState(false);
   const navigate = useNavigate();
   const checklists = M.savedChecklists;
 
-  const selectCheckList = () => navigate("/checklist/select");
+  const selectCheckList = () => {
+    setListSelect(listSelect => !listSelect);
+  }
   
   const onClickedHouse = (checklistId: number) => {
     localStorage.setItem("currentChecklistId", checklistId.toString());
@@ -14,7 +19,7 @@ export default function ChecklistMain() {
   };
 
   return (
-    <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px]">
+    <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px] relative">
       {checklists.length > 0 ? (
         <div className="flex flex-col items-center w-full">
           <h1 className="pb-10 text-4xl font-semibold text-black">체크리스트</h1>
@@ -51,6 +56,14 @@ export default function ChecklistMain() {
           onclick={selectCheckList}
         />
       )}
+      {listSelect &&
+        <CheckListSelect 
+          title="체크리스트 추가"
+          sooDong={true}
+          buttonTitle="추가하기"
+          redirectionURL="/"
+        />
+       }
     </div>
   );
 }

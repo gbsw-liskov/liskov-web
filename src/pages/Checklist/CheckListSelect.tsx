@@ -5,7 +5,14 @@ import * as M from "@/mock/mock";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CheckListSelect() {
+interface SelectProps{
+  title: string;
+  sooDong?: boolean;
+  buttonTitle: string;
+  redirectionURL: string;
+}
+
+export default function CheckListSelect({title, sooDong, buttonTitle, redirectionURL}: SelectProps) {
   const navigate = useNavigate();
   const [properites, setProperties] = useState([]);
   const [aiLoading, setAiLoading] = useState(false);
@@ -38,26 +45,28 @@ export default function CheckListSelect() {
 
   const handleLoadingComplete = () => {
     setAiLoading(false);
-    navigate("/ai/createlist");
+    navigate("/ai/createlist"); 
   };
 
   const goSoodongAdd = () => {
-    navigate('/checklist/add')
+    navigate(`${redirectionURL}`)
   }
   return (
     <>
-      <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px]">
+      <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px] absolute top-0 left-0 bg-white">
         <div className="flex flex-col items-center w-full">
           <div className="relative flex items-center justify-center w-[790px] pb-10">
             <h1 className="text-[28px] font-semibold text-black">
-              체크리스트 추가
+              {title}
             </h1>
-            <p
-              onClick={goSoodongAdd}
-              className="absolute right-0 text-black text-[20px] font-medium cursor-pointer"
-            >
-              수동추가
-            </p>
+            { sooDong && 
+              <p
+                onClick={goSoodongAdd}
+                className="absolute right-0 text-black text-[20px] font-medium cursor-pointer"
+              >
+                수동추가
+              </p>
+            } 
           </div>
           <div className="flex flex-col items-center w-full pb-20">
             {M.addMockHouses.map((item, index) => (
@@ -80,7 +89,7 @@ export default function CheckListSelect() {
             type="button"
             className="flex mx-auto w-[417px] py-4 rounded-[5px] justify-center items-center bg-[#58CCFF] font-semibold text-lg text-white"
           >
-            추가하기
+            {buttonTitle}
           </button>
         </div>
       </div>

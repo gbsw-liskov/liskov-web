@@ -14,7 +14,6 @@ export default function Router(){
         <Route path="/map" element={<R.MapPage />} />
         <Route path="/checklist/confirm" element={<R.CheckList /> } />
         <Route path="/checklist" element={<R.CheckListMain />} />
-        <Route path="/checklist/select" element={<R.CheckListSelect />} />
         <Route path="/checklist/add" element={<R.CheckListCreate/>} />
         <Route path="/ai/createlist" element={<R.AIGeneratedList />} />
         <Route path="*" element={<R.NotFound />} />

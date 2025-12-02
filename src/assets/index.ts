@@ -16,6 +16,9 @@ import ClipBoard from './clipboard.png'
 import Passed from './passed.png'
 import PadMap from './padMapImage.png'
 import RecentHome from './recenthome.png';
+import Document from './document.png';
+import UploadDoc from './upload.png';
+import UploadHouse from './uploadhouse.png';
 
 export {
   Logo,
@@ -36,4 +39,7 @@ export {
   Passed,
   PadMap,
   RecentHome,
+  Document,
+  UploadDoc,
+  UploadHouse,
 };
