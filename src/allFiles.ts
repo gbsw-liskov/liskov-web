@@ -11,5 +11,12 @@ import CheckListSelect from './pages/CheckList/CheckListSelect';
 import CheckListCreate from './pages/CheckList/CheckListCreate';
 import AIGeneratedList from './pages/AI/AIGeneratedList';
 import MapPage from './pages/Map/MapPage';
+import LoanGuide from './pages/Loan/LoanGuide';
+import ContractInfo from './pages/Loan/Question/ContractInfo';
+import CreditInfo from './pages/Loan/Question/CreditInfo';
+import EarningsInfo from './pages/Loan/Question/EarningsInfo';
+import HouseInfo from './pages/Loan/Question/HouseInfo';
+import UserInfo from './pages/Loan/Question/UserInfo';
+import LoanResult from './pages/Loan/Question/LoanResult';
 
-export { SignIn, SignUp, Profile, Home, Analyze, AnalyzeResult, CheckList, CheckListMain, CheckListCreate, CheckListSelect, MapPage, AIGeneratedList, NotFound }
+export { SignIn, SignUp, Profile, Home, Analyze, AnalyzeResult, CheckList, CheckListMain, CheckListCreate, CheckListSelect, MapPage, AIGeneratedList, NotFound, LoanGuide, ContractInfo, UserInfo, HouseInfo, CreditInfo, EarningsInfo, LoanResult }

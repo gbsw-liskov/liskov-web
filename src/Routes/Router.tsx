@@ -17,6 +17,13 @@ export default function Router(){
         <Route path="/checklist" element={<R.CheckListMain />} />
         <Route path="/checklist/add" element={<R.CheckListCreate/>} />
         <Route path="/ai/createlist" element={<R.AIGeneratedList />} />
+        <Route path="/loan" element={<R.LoanGuide />} />
+        <Route path="/loan/contract" element={<R.ContractInfo />} />
+        <Route path="/loan/credit" element={<R.CreditInfo />} />
+        <Route path="/loan/earnings" element={<R.EarningsInfo />} />
+        <Route path="/loan/house" element={<R.HouseInfo />} />
+        <Route path="/loan/user" element={<R.UserInfo />} />
+        <Route path="/loan/result" element={<R.LoanResult />} />
         <Route path="*" element={<R.NotFound />} />
       </Routes>
     </>
