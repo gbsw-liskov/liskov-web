@@ -113,7 +113,6 @@ export default function Analyze() {
             onClick={handleCloseHouseSelect}
             className="absolute top-4 right-4 z-50 text-[32px] text-black hover:text-gray-600 bg-white rounded-full w-10 h-10 flex items-center justify-center"
           >
-            ×
           </button>
           <CheckListSelect
             title="매물 추가"
