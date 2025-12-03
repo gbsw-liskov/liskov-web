@@ -5,16 +5,25 @@ import * as M from "@/mock/mock";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface SelectProps{
+interface SelectProps {
   title: string;
   sooDong?: boolean;
   buttonTitle: string;
+  AI?: boolean;
   redirectionURL: string;
+  onHouseSelected?: (house: any) => void;
 }
 
-export default function CheckListSelect({title, sooDong, buttonTitle, redirectionURL}: SelectProps) {
+export default function CheckListSelect({
+  title,
+  sooDong = false,
+  buttonTitle,
+  redirectionURL,
+  AI = false,
+  onHouseSelected,
+}: SelectProps) {
   const navigate = useNavigate();
-  const [properites, setProperties] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [aiLoading, setAiLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -39,34 +48,44 @@ export default function CheckListSelect({title, sooDong, buttonTitle, redirectio
     if (selectedIndex === null) return alert("선택된 매물이 없습니다.");
 
     const houseIndex = selectedIndex + 1;
-    localStorage.setItem("HouseIndex", houseIndex.toString());
-    setAiLoading(true);
+
+    if (AI) {
+      localStorage.setItem("HouseIndex", houseIndex.toString());
+      setAiLoading(true);
+    } else {
+      const selectedHouse = M.addMockHouses[selectedIndex];
+      localStorage.setItem("HouseIndex", houseIndex.toString());
+      localStorage.setItem("SelectedHouseData", JSON.stringify(selectedHouse));
+
+      if (onHouseSelected) {
+        onHouseSelected(selectedHouse);
+      }
+    }
   };
 
   const handleLoadingComplete = () => {
     setAiLoading(false);
-    navigate("/ai/createlist"); 
+    navigate("/ai/createlist");
   };
 
   const goSoodongAdd = () => {
-    navigate(`${redirectionURL}`)
-  }
+    navigate(`${redirectionURL}`);
+  };
+
   return (
     <>
       <div className="min-h-screen min-w-full px-[237px] pt-[128px] pb-[60px] absolute top-0 left-0 bg-white">
         <div className="flex flex-col items-center w-full">
           <div className="relative flex items-center justify-center w-[790px] pb-10">
-            <h1 className="text-[28px] font-semibold text-black">
-              {title}
-            </h1>
-            { sooDong && 
+            <h1 className="text-[28px] font-semibold text-black">{title}</h1>
+            {sooDong && (
               <p
                 onClick={goSoodongAdd}
                 className="absolute right-0 text-black text-[20px] font-medium cursor-pointer"
               >
                 수동추가
               </p>
-            } 
+            )}
           </div>
           <div className="flex flex-col items-center w-full pb-20">
             {M.addMockHouses.map((item, index) => (

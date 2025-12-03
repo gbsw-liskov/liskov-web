@@ -11,6 +11,7 @@ export default function Router(){
         <Route path="/signup" element={<R.SignUp />} />
         <Route path="/profile" element={<R.Profile />} />
         <Route path="/analyze" element={<R.Analyze />} />
+        <Route path="/analyze/result" element={<R.AnalyzeResult />} />
         <Route path="/map" element={<R.MapPage />} />
         <Route path="/checklist/confirm" element={<R.CheckList /> } />
         <Route path="/checklist" element={<R.CheckListMain />} />
