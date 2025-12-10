@@ -28,8 +28,13 @@ export default function CheckListSelect({
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const getProperties = async () => {
+    const token = localStorage.getItem("accessToken");
     try {
-      const res = await API.get("/api/properties");
+      const res = await API.get("/api/properties",{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(res);
       setProperties(res.data);
     } catch (e) {

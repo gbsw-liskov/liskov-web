@@ -5,7 +5,7 @@ import Router from '@/Routes/Router';
 
 function AppWrapper() {
   const location = useLocation();
-  const noHeaderPaths = ["/ai/loading", "/ai/createlist", "/checklist/confirm"];
+  const noHeaderPaths = ["/ai/loading", "/ai/createlist", "/checklist/confirm", "/profile/setting"];
 
   const showHeader = !noHeaderPaths.includes(location.pathname);
 

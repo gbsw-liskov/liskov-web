@@ -1,7 +1,6 @@
 import { IoPerson } from "react-icons/io5";
-import { FaAddressCard } from "react-icons/fa";
-import { IoIosCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 interface InfoProps{
   icon: number;
@@ -15,9 +14,8 @@ export default function MyInfo( { icon, title, info } : InfoProps) {
       <div className="flex items-center w-auto h-auto">
         {
           icon == 1 ? <IoPerson size={25} />
-          : icon == 2 ? <FaAddressCard size={25} />
-          : icon == 3 ? <IoIosCall size={25} />
-          : <MdMail size={25} />
+          : icon == 2 ? <MdMail size={25} />
+          : <RiLockPasswordFill size={25}/>
         }
         <p className=" pl-[10px] text-[16px] text-black font-medium">
           {title}

@@ -1,11 +1,37 @@
 import { Logo, Person } from "@/assets";
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import useProfile from "@/hooks/useProfile";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const username = "asdf";
   const isLogined = localStorage.getItem("accessToken");
+  const [username, setUsername] = useState("");
+  
+  const { getName } = useProfile();
+
+  useEffect(() => {
+    if (isLogined) {
+      getName().then((name) => {
+        if (name) setUsername(name);
+      });
+    }
+  }, [isLogined]);
+
+  useEffect(() => {
+    const updateHeaderName = () => {
+      const name = localStorage.getItem("username");
+      if (name) setUsername(name);
+    };
+
+    window.addEventListener("storage", updateHeaderName);
+
+    return () => {
+      window.removeEventListener("storage", updateHeaderName);
+    };
+  }, []);
+
   
   const menus = [
     { name: "홈", path: "/" },
