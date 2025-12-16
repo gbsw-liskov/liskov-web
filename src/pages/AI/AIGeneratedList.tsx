@@ -1,8 +1,8 @@
 import * as C from "./components";
-import { useState } from "react";
+import { AILoading } from "@/components";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { savedChecklists } from "@/mock/mock";
-import { House } from "@/assets";
+import API from "@/api/axios";
 
 interface ChecklistItem {
   id: number;
@@ -10,19 +10,82 @@ interface ChecklistItem {
   checked: boolean;
 }
 
+interface Property {
+  propertyId: number;
+  name: string;
+  address: string;
+  propertyType: string;
+  floor: number;
+  area: number;
+  builtYear: number;
+  marketPrice: number;
+  leaseType: string;
+  deposit: number;
+  monthlyRent: number | null;
+  memo: string;
+  image?: string;
+}
+
 export default function AIGeneratedList() {
   const navigate = useNavigate();
-  const index = localStorage.getItem("HouseIndex");
-
-  const [checklists, setChecklists] = useState<ChecklistItem[]>([
-    { id: 1, text: "건물 외관 및 균열 상태 확인", checked: false },
-    { id: 2, text: "누수 및 곰팡이 흔적 점검", checked: false },
-    { id: 3, text: "수압 및 배수 상태 테스트", checked: false },
-    { id: 4, text: "전기 배선 및 콘센트 작동 확인", checked: false },
-  ]);
-
+  const [aiLoading, setAiLoading] = useState(true);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(
+    null
+  );
+  const [checklists, setChecklists] = useState<ChecklistItem[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newItemText, setNewItemText] = useState("");
+
+  useEffect(() => {
+    const loadPropertyAndGenerateChecklist = async () => {
+      const propertyData = localStorage.getItem("SelectedHouseData");
+      if (propertyData) {
+        const property = JSON.parse(propertyData);
+        setSelectedProperty(property);
+        await generateAIChecklist(property.propertyId);
+      } else {
+        setAiLoading(false);
+      }
+    };
+
+    loadPropertyAndGenerateChecklist();
+  }, []);
+
+  const generateAIChecklist = async (propertyId: number) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const res = await API.post(
+        "/api/checklist/generate",
+        { propertyId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(res);
+      const aiGeneratedItems = res.data.data.map(
+        (item: any, index: number) => ({
+          id: index + 1,
+          text: item.text || item,
+          checked: false,
+        })
+      );
+
+      setChecklists(aiGeneratedItems);
+    } catch (e) {
+      console.error(e);
+      setChecklists([
+        { id: 1, text: "건물 외관 및 균열 상태 확인", checked: false },
+        { id: 2, text: "누수 및 곰팡이 흔적 점검", checked: false },
+        { id: 3, text: "수압 및 배수 상태 테스트", checked: false },
+        { id: 4, text: "전기 배선 및 콘센트 작동 확인", checked: false },
+      ]);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const toggleCheck = (id: number) => {
     setChecklists((prev) =>
@@ -52,7 +115,7 @@ export default function AIGeneratedList() {
     setNewItemText("");
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const checkedItems = checklists.filter((item) => item.checked);
 
     if (checkedItems.length === 0) {
@@ -60,31 +123,41 @@ export default function AIGeneratedList() {
       return;
     }
 
-    const houseName = `의성군 봉양면 화전리 ${index} 파랑채`;
-    const today = new Date().toISOString().split("T")[0];
+    const token = localStorage.getItem("accessToken");
+    try {
+      const res = await API.post(
+        "/api/checklist",
+        {
+          propertyId: selectedProperty?.propertyId,
+          items: checkedItems.map((item) => ({
+            content: item.text,
+            severity: "MEDIUM",
+          })),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const newChecklist = {
-      id: Date.now(),
-      houseIndex: index || "1",
-      houseName: houseName,
-      image: House,
-      date: today,
-      items: checkedItems,
-      isConfirmed: false,
-    };
-
-    savedChecklists.push(newChecklist);
-
-    localStorage.setItem("currentChecklistId", newChecklist.id.toString());
-
-    navigate("/checklist");
+      console.log("체크리스트 생성 성공:", res.data);
+      navigate("/checklist");
+    } catch (error) {
+      console.error("체크리스트 생성 실패:", error);
+      alert("체크리스트 생성에 실패했습니다.");
+    }
   };
+
+  if (aiLoading) {
+    return <AILoading title="체크리스트" />;
+  }
 
   return (
     <div className="flex pt-[50px] justify-center min-w-full min-h-screen">
       <div className="w-[882px] min-h-[758px]">
         <h1 className="flex justify-center font-semibold text-[28px] text-black">
-          의성군 봉양면 화전리 {index} 파랑채
+          {selectedProperty?.name || "매물 정보"}
         </h1>
 
         <div className="grid grid-cols-2 gap-x-[36px] gap-y-[30px] pt-16">

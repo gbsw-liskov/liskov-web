@@ -2,16 +2,16 @@ import { FaCheck } from 'react-icons/fa';
 
 interface CheckListAddMenuProps {
   image: string;
-  roomType: string;
+  name: string;
   region: string;
   info: string;
-  intro: string;
+  memo: string;
   price: string;
   selected: boolean;
   onClick: () => void;
 }
 
-export default function CheckListAddMenu({image, roomType, region, info, intro, price, selected, onClick}: CheckListAddMenuProps) {
+export default function CheckListAddMenu({image, name, region, info, memo, price, selected, onClick}: CheckListAddMenuProps) {
   return (
     <div
       onClick={onClick}
@@ -37,10 +37,10 @@ export default function CheckListAddMenu({image, roomType, region, info, intro, 
       </div>
 
       <div className="flex flex-col justify-between w-[612px] h-[132px] p-3">
-        <p className="font-medium text-[14px] text-[#757575]">{roomType}</p>
+        <p className="font-medium text-[14px] text-[#757575] pb-[4px]">{name}</p>
         <p className="font-semibold text-[18px] text-black">{region}</p>
         <p className="font-medium text-[14px] text-[#757575]">{info}</p>
-        <p className="font-medium text-[15px] text-[#757575]">{intro}</p>
+        <p className="font-medium text-[15px] text-[#757575]">{memo}</p>
         <p className="w-full flex justify-end font-bold text-[18px] text-black">{price}</p>
       </div>
     </div>

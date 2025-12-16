@@ -1,26 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Ai } from "@/assets";
 
-interface AILoadingProps {
-  onComplete?: () => void;
+interface AILoadingProps{
+  title: string;
 }
 
-export default function AILoading({ onComplete }: AILoadingProps) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (onComplete) {
-        onComplete();
-      } else {
-        navigate("/ai/createlist");
-      }
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [navigate, onComplete]);
-
+export default function AILoading( {title}:AILoadingProps ) {
   return (
     <div className="fixed inset-0 flex flex-col z-[1000] items-center justify-center min-w-full min-h-screen bg-white">
       <img
@@ -29,7 +13,7 @@ export default function AILoading({ onComplete }: AILoadingProps) {
         alt="로딩 아이콘"
       />
       <h1 className="text-4xl font-bold text-black pt-[98px] leading-normal text-center">
-        AI가 최적의 체크리스트를
+        AI가 최적의 {title}를
         <br />
         생성하는 중입니다...
       </h1>
