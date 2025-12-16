@@ -14,7 +14,7 @@ export default function useProfile() {
 
       if (!token) {
         toast.error("로그인이 필요합니다.");
-        navigate("/login");
+        navigate("/signin");
         return;
       }
 
@@ -26,7 +26,7 @@ export default function useProfile() {
       if (e.response?.status === 401 || e.response?.status === 403) {
         toast.error("인증이 만료되었습니다. 다시 로그인해주세요.");
         localStorage.clear();
-        navigate("/login");
+        navigate("/signin");
       }
     }
   };
@@ -88,8 +88,8 @@ export default function useProfile() {
 
       if (e.response?.status === 401 || e.response?.status === 403) {
         toast.error("인증이 만료되었습니다. 다시 로그인해주세요.");
-        // localStorage.clear();
-        // navigate("/login");
+        localStorage.clear();
+        navigate("/signin");
       }
     }
   };
@@ -108,7 +108,7 @@ export default function useProfile() {
       if (e.response?.status === 401 || e.response?.status === 403) {
         toast.error("인증이 만료되었습니다. 다시 로그인해주세요.");
         localStorage.clear();
-        navigate("/login");
+        navigate("/signin");
       }
     }
   }
