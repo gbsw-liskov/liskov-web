@@ -5,9 +5,19 @@ import Router from '@/Routes/Router';
 
 function AppWrapper() {
   const location = useLocation();
-  const noHeaderPaths = ["/ai/loading", "/ai/createlist", "/checklist/confirm", "/profile/setting"];
+  const noHeaderPaths = [
+    "/ai/loading",
+    "/ai/createlist",
+    "/checklist/confirm",
+    "/profile/setting",
+  ];
 
-  const showHeader = !noHeaderPaths.includes(location.pathname);
+  const isNoHeaderPath =
+    noHeaderPaths.includes(location.pathname) ||
+    location.pathname.startsWith("/loan");
+
+  const showHeader = !isNoHeaderPath;
+
 
   return (
     <>
