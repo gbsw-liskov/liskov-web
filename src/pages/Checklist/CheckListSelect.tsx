@@ -21,16 +21,14 @@ interface Property {
 
 interface SelectProps {
   title: string;
-  sooDong?: boolean;
   buttonTitle: string;
   AI?: boolean;
-  redirectionURL: string;
+  redirectionURL?: string;
   onHouseSelected?: (house: any) => void;
 }
 
 export default function CheckListSelect({
   title,
-  sooDong = false,
   buttonTitle,
   redirectionURL,
   AI = false,
@@ -57,7 +55,6 @@ export default function CheckListSelect({
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
       setProperties(res.data.data || []);
     } catch (e) {
       console.error(e);
@@ -78,7 +75,7 @@ export default function CheckListSelect({
     if (selectedIndex === null) return alert("선택된 매물이 없습니다.");
 
     const selectedProperty = properties[selectedIndex];
-    const houseIndex = selectedIndex + 1;
+    const houseIndex = selectedProperty.propertyId;
 
     if (AI) {
       localStorage.setItem("HouseIndex", houseIndex.toString());
@@ -88,15 +85,11 @@ export default function CheckListSelect({
       );
     } else {
       localStorage.setItem("HouseIndex", houseIndex.toString());
-      localStorage.setItem(
-        "SelectedHouseData",
-        JSON.stringify(selectedProperty)
-      );
 
       if (onHouseSelected) {
         onHouseSelected(selectedProperty);
       }
-      navigate(redirectionURL, {
+      navigate(redirectionURL!, {
         state: { propertyId: selectedProperty.propertyId },
       });
     }
@@ -134,14 +127,12 @@ export default function CheckListSelect({
                 <br />
                 나에게 딱 맞는 매물을 찾아보세요!
               </p>
-              {sooDong && (
-                <button
-                  onClick={goSoodongAdd}
-                  className="w-[417px] h-[60px] flex items-center justify-center bg-[#58CCFF] text-white text-[18px] rounded-[5px] font-semibold hover:bg-[#45b8eb] transition-colors"
-                >
-                  찾아보기
-                </button>
-              )}
+              <button
+                onClick={goSoodongAdd}
+                className="w-[417px] h-[60px] flex items-center justify-center bg-[#58CCFF] text-white text-[18px] rounded-[5px] font-semibold hover:bg-[#45b8eb] transition-colors"
+              >
+                찾아보기
+              </button>
             </div>
           ) : (
             <>
