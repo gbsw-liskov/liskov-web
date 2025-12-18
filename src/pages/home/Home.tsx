@@ -63,7 +63,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-white pb-[55px] overflow-hidden">
+    <div className="w-full bg-white overflow-hidden">
       <C.Banner />
       <div className="mt-20 w-[1135px] mx-auto">
         <h1 className="text-black text-[28px] font-semibold">
@@ -89,7 +89,7 @@ export default function Home() {
         <h1 className="text-black text-[28px] font-semibold mb-8">
           🔎 최근 가장 많이 찾는 <span className="text-[#58CCFF]">봉양면 </span>매물
         </h1>
-        <div className="flex gap-[51px]">
+        <div className="flex gap-[51px] pb-[55px]">
           {recentItems.map((item) => (
             <C.RecentItem
               key={item.id}
@@ -104,6 +104,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <C.AddButton />
     </div>
   );
 }
