@@ -1,12 +1,13 @@
 import * as Image from "@/assets";
 import UploadHouse from "./UploadHouse";
+import { useEffect, useState } from "react";
+import API from "@/api/axios";
 
 interface UploadCardProps {
   title: string;
   uploadKind: string;
   onclick: () => void;
   uploadedFile?: File | null;
-  selectedHouse?: any;
 }
 
 export default function UploadCard({
@@ -14,8 +15,41 @@ export default function UploadCard({
   uploadKind,
   onclick,
   uploadedFile,
-  selectedHouse,
 }: UploadCardProps) {
+  const [info, setInfo] = useState<string>("");
+  const [selectedHouse, setSelectedHouse] = useState<any>(null);
+  useEffect(() => {
+    if(localStorage.getItem("HouseIndex")) {
+      getHouseDetail();
+    }
+  }, [])
+
+  const getHouseDetail = async () => {
+    const houseIndex:number = Number(localStorage.getItem("HouseIndex"));
+    const token = localStorage.getItem("accessToken");
+      try{
+        const res = await API.get(`/api/properties/${houseIndex}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        setSelectedHouse(res.data.data);
+        const propertyTypeMap: { [key: string]: string } = {
+          APARTMENT: "아파트",
+          VILLA: "빌라",
+          OFFICETEL: "오피스텔",
+          ONE_ROOM: "원룸",
+          OTHER: "기타",
+        };
+        const propertyType = propertyTypeMap[res.data.data.propertyType] || res.data.data.propertyType;
+        const info = `${res.data.data.floor}층 | ${res.data.data.area}평 | ${propertyType}`;
+        setInfo(info);
+        localStorage.removeItem("HouseIndex");
+      } catch (e) {
+        console.error(e);
+      }
+  }
   return (
     <div
       onClick={onclick}
@@ -53,11 +87,11 @@ export default function UploadCard({
             <div className="pt-[20px]">
               <UploadHouse
                 image={selectedHouse.image}
-                roomType={selectedHouse.roomType}
-                region={selectedHouse.region}
-                info={selectedHouse.info}
-                intro={selectedHouse.intro}
-                price={selectedHouse.price}
+                name={selectedHouse.name}
+                address={selectedHouse.address}
+                info={info}
+                memo={selectedHouse.memo}
+                deposit={selectedHouse.deposit}
               />
             </div>
           ) : (

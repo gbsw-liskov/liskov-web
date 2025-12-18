@@ -34,8 +34,7 @@ export default function Analyze() {
     setShowHouseSelect(false);
   };
 
-  const handleHouseSelect = (house: any) => {
-    setSelectedHouse(house);
+  const handleHouseSelect = () => {
     setShowHouseSelect(false);
   };
 

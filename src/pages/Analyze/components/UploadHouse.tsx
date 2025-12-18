@@ -1,19 +1,19 @@
 interface UploadHouseProps {
   image: string;
-  roomType: string;
-  region: string;
+  name: string;
+  address: string;
   info: string;
-  intro: string;
-  price: string;
+  memo: string;
+  deposit: number;
 }
 
 export default function UploadHouse({
   image,
-  roomType,
-  region,
+  name,
+  address,
   info,
-  intro,
-  price,
+  memo,
+  deposit,
 }: UploadHouseProps) {
   return (
     <div className="w-[204px] h-[285px]">
@@ -25,11 +25,11 @@ export default function UploadHouse({
         />
       </div>
       <div className="w-full h-auto pt-[22px]">
-        <p className="text-[#757575] text-[12px] font-medium">{roomType}</p>
-        <p className="text-black text-[13px] font-medium">{region}</p>
+        <p className="text-[#757575] text-[12px] font-medium">{name}</p>
+        <p className="text-black text-[13px] font-medium">{address}</p>
         <p className="text-[#757575] text-[12px] font-medium">{info}</p>
-        <p className="text-[#757575] text-[12px] font-medium">{intro}</p>
-        <p className="text-black text-[14px] font-semibold">{price}</p>
+        <p className="text-[#757575] text-[12px] font-medium">{memo}</p>
+        <p className="text-black text-[14px] font-semibold">{deposit}</p>
       </div>
     </div>
   );
