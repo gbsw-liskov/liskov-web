@@ -7,7 +7,7 @@ export default function ProgressBar({
   currentStep,
   totalSteps,
 }: ProgressBarProps) {
-  const percentage = (currentStep-5 / totalSteps) * 100;
+  const percentage = (currentStep / totalSteps) * 100;
 
   return (
     <div className="w-full">
