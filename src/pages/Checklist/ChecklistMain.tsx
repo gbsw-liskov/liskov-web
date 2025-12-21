@@ -100,7 +100,7 @@ export default function ChecklistMain() {
       {listSelect && (
         <CheckListSelect
           title="체크리스트 추가"
-          sooDong={true}
+          AI={true}
           buttonTitle="추가하기"
           redirectionURL="/ai/createlist"
         />

@@ -83,6 +83,7 @@ export default function CheckListSelect({
         "SelectedHouseData",
         JSON.stringify(selectedProperty)
       );
+      navigate("/ai/createlist");
     } else {
       localStorage.setItem("HouseIndex", houseIndex.toString());
 

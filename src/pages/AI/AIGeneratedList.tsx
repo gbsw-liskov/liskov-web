@@ -3,6 +3,7 @@ import { AILoading } from "@/components";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "@/api/axios";
+import toast from "react-hot-toast";
 
 interface ChecklistItem {
   id: number;
@@ -65,10 +66,12 @@ export default function AIGeneratedList() {
       );
 
       console.log(res);
-      const aiGeneratedItems = res.data.data.map(
-        (item: any, index: number) => ({
+
+      const contents = res.data.data.contents || [];
+      const aiGeneratedItems = contents.map(
+        (content: string, index: number) => ({
           id: index + 1,
-          text: item.text || item,
+          text: content,
           checked: false,
         })
       );
@@ -125,13 +128,20 @@ export default function AIGeneratedList() {
 
     const token = localStorage.getItem("accessToken");
     try {
+      console.log({
+        propertyId: selectedProperty?.propertyId,
+        items: checkedItems.map((item) => ({
+          content: item.text,
+          severity: "NONE",
+        })),
+      });
       const res = await API.post(
         "/api/checklist",
         {
           propertyId: selectedProperty?.propertyId,
           items: checkedItems.map((item) => ({
             content: item.text,
-            severity: "MEDIUM",
+            severity: "NONE",
           })),
         },
         {
@@ -141,10 +151,11 @@ export default function AIGeneratedList() {
         }
       );
 
-      console.log("체크리스트 생성 성공:", res.data);
+      toast.success("체크리스트를 저장했습니다.");
+      console.log("체크리스트를 저장했습니다", res.data);
       navigate("/checklist");
     } catch (error) {
-      console.error("체크리스트 생성 실패:", error);
+      console.error("체크리스트 저장을 실패했습니다", error);
       alert("체크리스트 생성에 실패했습니다.");
     }
   };
