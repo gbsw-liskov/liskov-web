@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { signupAPI, loginAPI, getProfileAPI } from "@/api/auth.api";
-import type { SignupForm, LoginForm, User } from "@/types/auth";
+import { signupAPI, loginAPI } from "@/api/auth.api";
+import type { SignupForm, LoginForm } from "@/types/auth";
 
 const useAuth = () => {
   const navigate = useNavigate();
 
   const signup = async (form: SignupForm) => {
     try {
-      console.log(form);
       await signupAPI(form);
       toast.success("회원가입에 성공했습니다");
       navigate("/signin");

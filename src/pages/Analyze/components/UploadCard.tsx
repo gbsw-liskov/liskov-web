@@ -1,55 +1,45 @@
 import * as Image from "@/assets";
 import UploadHouse from "./UploadHouse";
 import { useEffect, useState } from "react";
-import API from "@/api/axios";
 
 interface UploadCardProps {
   title: string;
   uploadKind: string;
   onclick: () => void;
   uploadedFile?: File | null;
+  selectedHouse?: any;
 }
+
 
 export default function UploadCard({
   title,
   uploadKind,
   onclick,
   uploadedFile,
+  selectedHouse,
 }: UploadCardProps) {
-  const [info, setInfo] = useState<string>("");
-  const [selectedHouse, setSelectedHouse] = useState<any>(null);
-  useEffect(() => {
-    if(localStorage.getItem("HouseIndex")) {
-      getHouseDetail();
-    }
-  }, [])
+  const [info, setInfo] = useState("");
 
-  const getHouseDetail = async () => {
-    const houseIndex:number = Number(localStorage.getItem("HouseIndex"));
-    const token = localStorage.getItem("accessToken");
-      try{
-        const res = await API.get(`/api/properties/${houseIndex}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(res);
-        setSelectedHouse(res.data.data);
-        const propertyTypeMap: { [key: string]: string } = {
-          APARTMENT: "아파트",
-          VILLA: "빌라",
-          OFFICETEL: "오피스텔",
-          ONE_ROOM: "원룸",
-          OTHER: "기타",
-        };
-        const propertyType = propertyTypeMap[res.data.data.propertyType] || res.data.data.propertyType;
-        const info = `${res.data.data.floor}층 | ${res.data.data.area}평 | ${propertyType}`;
-        setInfo(info);
-        localStorage.removeItem("HouseIndex");
-      } catch (e) {
-        console.error(e);
-      }
-  }
+  useEffect(() => {
+    if (selectedHouse) {
+      const propertyTypeMap: { [key: string]: string } = {
+        APARTMENT: "아파트",
+        VILLA: "빌라",
+        OFFICETEL: "오피스텔",
+        ONE_ROOM: "원룸",
+        OTHER: "기타",
+      };
+
+      const propertyType =
+        propertyTypeMap[selectedHouse.propertyType] ||
+        selectedHouse.propertyType;
+
+      setInfo(
+        `${selectedHouse.floor}층 | ${selectedHouse.area}평 | ${propertyType}`
+      );
+    }
+  }, [selectedHouse]);
+
   return (
     <div
       onClick={onclick}

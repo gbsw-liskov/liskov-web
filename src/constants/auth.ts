@@ -47,7 +47,7 @@ export const SIGNUP_FIELDS = [
 ];
 
 export const PROFILE_MENU_ITEMS = [
-  { imageNum: 1, title: "관심 매물" },
-  { imageNum: 2, title: "매물 분석" },
-  { imageNum: 3, title: "체크리스트" },
+  { imageNum: 1, title: "관심 매물", path: '/favorite' },
+  { imageNum: 2, title: "매물 분석", path: '/analyze' },
+  { imageNum: 3, title: "체크리스트", path: '/checklist' },
 ];

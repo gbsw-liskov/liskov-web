@@ -9,11 +9,17 @@ export default function Profile() {
   
   const goToSetting = () => {navigate('/profile/setting');}
 
+  // PROFILE_MENU_ITEMS에 onClick 함수 추가
+  const menuItemsWithOnClick = PROFILE_MENU_ITEMS.map(item => ({
+    ...item,
+    onClick: () => navigate(item.path)
+  }));
+
   return (
     <div className="min-h-screen w-[836px] pt-20 mx-auto bg-[#F8FAFB] pb-[49px]">
       <div className="w-[515px] mx-auto pt-10">
         <C.ProfileHeader onclick={goToSetting} userData={userData} />
-        <C.ProfileMenuSection menuItems={PROFILE_MENU_ITEMS} />
+        <C.ProfileMenuSection menuItems={menuItemsWithOnClick} />
         <C.ProfileInfoSection userData={userData} />
         <div className="mt-[50px] flex justify-center items-center">
           <button

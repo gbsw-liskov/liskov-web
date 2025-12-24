@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 interface RecentItemProps {
   id: number;
   image: string;
@@ -11,7 +9,6 @@ interface RecentItemProps {
 }
 
 export default function RecentItem({
-  id,
   image,
   houseType,
   floor,
@@ -19,35 +16,23 @@ export default function RecentItem({
   price,
   onDetailClick,
 }: RecentItemProps) {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  useEffect(() => {
-    const liked = localStorage.getItem(`recentItem_${id}_liked`);
-    if (liked === "true") {
-      setIsLiked(true);
-    }
-  }, [id]);
-
-  const handleLikeToggle = () => {
-    const newLikedState = !isLiked;
-    setIsLiked(newLikedState);
-    localStorage.setItem(`recentItem_${id}_liked`, String(newLikedState));
-  };
-
   return (
     <div
-      className="w-[542px] h-[744px] flex flex-col justify-between bg-cover bg-center rounded-[5px] z-[1] relative"
-      style={{ backgroundImage: `url(${image})` }}
+      className="w-[542px] h-[744px] flex flex-col justify-end rounded-[5px] relative cursor-pointer overflow-hidden"
+      onClick={onDetailClick}
     >
-      <div className="w-[542px] h-[744px] absolute z-[2] inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.4)_100%)]" />
+      {/* 배경 이미지 */}
+      <img 
+        src={image} 
+        alt="매물 이미지"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      />
+      
+      {/* 그라데이션 오버레이 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/60 z-[1]" />
 
-      <div className="flex justify-end p-[35px] z-[3]">
-        <button onClick={handleLikeToggle} className="text-3xl">
-          {isLiked ? "❤️" : "🤍"}
-        </button>
-      </div>
-
-      <div className="pl-[66px] pb-[45px] z-[3]">
+      {/* 컨텐츠 */}
+      <div className="pl-[66px] pb-[45px] relative z-[2]">
         <p className="text-[#f2f2f2] text-[22px] font-medium">
           {houseType} {floor}
         </p>
@@ -55,7 +40,7 @@ export default function RecentItem({
         <p className="mt-[15px] text-white text-[36px] font-bold">{price}</p>
         <button
           onClick={onDetailClick}
-          className="w-[410px] h-[73px] mt-[50px] flex justify-center items-center bg-transparent border-[3px] border-white rounded-[5px] text-white font-semibold text-[22px]"
+          className="w-[410px] h-[73px] mt-[50px] flex justify-center items-center bg-transparent border-[3px] border-white rounded-[5px] text-white font-semibold text-[22px] hover:bg-white/10 transition-colors"
         >
           자세히 보기
         </button>

@@ -5,10 +5,10 @@ import CheckListSelect from "./CheckListSelect";
 import API from "@/api/axios";
 
 interface Checklist {
+  name: string;
   checklistId: number;
   propertyId: number;
-  houseName: string;
-  date: string;
+  createdAt: string;
   image?: string;
 }
 
@@ -26,7 +26,6 @@ export default function ChecklistMain() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
       setChecklists(res.data.data || []);
     } catch (e) {
       console.error(e);
@@ -69,8 +68,8 @@ export default function ChecklistMain() {
               <CheckListMenu
                 key={checklist.checklistId}
                 image={checklist.image || null}
-                title={checklist.houseName}
-                date={checklist.date}
+                title={checklist.name}
+                date={checklist.createdAt.split("T")[0]}
                 onclick={() => onClickedHouse(checklist.checklistId)}
               />
             ))}

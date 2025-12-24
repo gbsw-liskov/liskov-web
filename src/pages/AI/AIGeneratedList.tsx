@@ -1,7 +1,7 @@
 import * as C from "./components";
 import { AILoading } from "@/components";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import API from "@/api/axios";
 import toast from "react-hot-toast";
 
@@ -29,6 +29,7 @@ interface Property {
 
 export default function AIGeneratedList() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [aiLoading, setAiLoading] = useState(true);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
@@ -38,18 +39,23 @@ export default function AIGeneratedList() {
   const [newItemText, setNewItemText] = useState("");
 
   useEffect(() => {
-    const loadPropertyAndGenerateChecklist = async () => {
-      const propertyData = localStorage.getItem("SelectedHouseData");
-      if (propertyData) {
-        const property = JSON.parse(propertyData);
-        setSelectedProperty(property);
-        await generateAIChecklist(property.propertyId);
+    if (location.state) {
+      const { selectedProperty } = location.state as {
+        selectedProperty: Property;
+        propertyId: number;
+      };
+      setSelectedProperty(selectedProperty);
+      generateAIChecklist(selectedProperty.propertyId);
+    } else {
+      const storedData = localStorage.getItem("aiChecklistProperty");
+      if (storedData) {
+        const { selectedProperty } = JSON.parse(storedData);
+        setSelectedProperty(selectedProperty);
+        generateAIChecklist(selectedProperty.propertyId);
       } else {
-        setAiLoading(false);
+        navigate("/", { replace: true });
       }
-    };
-
-    loadPropertyAndGenerateChecklist();
+    }
   }, []);
 
   const generateAIChecklist = async (propertyId: number) => {
@@ -64,8 +70,6 @@ export default function AIGeneratedList() {
           },
         }
       );
-
-      console.log(res);
 
       const contents = res.data.data.contents || [];
       const aiGeneratedItems = contents.map(
@@ -122,26 +126,20 @@ export default function AIGeneratedList() {
     const checkedItems = checklists.filter((item) => item.checked);
 
     if (checkedItems.length === 0) {
-      alert("최소 1개 이상의 체크리스트를 선택해주세요.");
+      toast.error("최소 1개 이상의 체크리스트를 선택해주세요.");
       return;
     }
 
     const token = localStorage.getItem("accessToken");
     try {
-      console.log({
-        propertyId: selectedProperty?.propertyId,
-        items: checkedItems.map((item) => ({
-          content: item.text,
-          severity: "NONE",
-        })),
-      });
-      const res = await API.post(
+      await API.post(
         "/api/checklist",
         {
           propertyId: selectedProperty?.propertyId,
           items: checkedItems.map((item) => ({
             content: item.text,
             severity: "NONE",
+            memo: "",
           })),
         },
         {
@@ -151,12 +149,12 @@ export default function AIGeneratedList() {
         }
       );
 
+      localStorage.removeItem("aiChecklistProperty");
       toast.success("체크리스트를 저장했습니다.");
-      console.log("체크리스트를 저장했습니다", res.data);
       navigate("/checklist");
     } catch (error) {
       console.error("체크리스트 저장을 실패했습니다", error);
-      alert("체크리스트 생성에 실패했습니다.");
+      alert("체크리스트 저장을 실패했습니다.");
     }
   };
 
@@ -166,14 +164,14 @@ export default function AIGeneratedList() {
 
   return (
     <div className="flex pt-[50px] justify-center min-w-full min-h-screen">
-      <div className="w-[882px] min-h-[758px]">
+      <div className="w-[992px] min-h-[758px]">
         <h1 className="flex justify-center font-semibold text-[28px] text-black">
           {selectedProperty?.name || "매물 정보"}
         </h1>
 
         <div className="grid grid-cols-2 gap-x-[36px] gap-y-[30px] pt-16">
           {checklists.map((item) => (
-            <div key={item.id} className="flex items-start h-7">
+            <div key={item.id} className="flex items-start h-15">
               <C.CheckListItem
                 check={item.checked}
                 item={item.text}

@@ -72,32 +72,36 @@ export default function CheckListSelect({
     setSelectedIndex(selectedIndex === i ? null : i);
 
   const handleHouseAdd = () => {
-    if (selectedIndex === null) return alert("선택된 매물이 없습니다.");
+    if (selectedIndex === null) {
+      alert("선택된 매물이 없습니다.");
+      return;
+    }
 
     const selectedProperty = properties[selectedIndex];
-    const houseIndex = selectedProperty.propertyId;
+
+    const navigationState = {
+      propertyId: selectedProperty.propertyId,
+      selectedProperty,
+    };
+
+    if (onHouseSelected) {
+      onHouseSelected(selectedProperty);
+    }
 
     if (AI) {
-      localStorage.setItem("HouseIndex", houseIndex.toString());
       localStorage.setItem(
-        "SelectedHouseData",
-        JSON.stringify(selectedProperty)
+        "aiChecklistProperty",
+        JSON.stringify(navigationState)
       );
-      navigate("/ai/createlist");
-    } else {
-      localStorage.setItem("HouseIndex", houseIndex.toString());
-
-      if (onHouseSelected) {
-        onHouseSelected(selectedProperty);
-      }
-      navigate(redirectionURL!, {
-        state: { propertyId: selectedProperty.propertyId },
-      });
+      navigate("/ai/createlist", { state: navigationState });
+    }
+    else {
+      navigate(redirectionURL!, { state: navigationState });
     }
   };
 
   const goSoodongAdd = () => {
-    navigate('/checklist/add');
+    navigate("/checklist/add");
   };
 
   if (loading) {
@@ -147,7 +151,9 @@ export default function CheckListSelect({
                       image={item.image || null}
                       name={item.name}
                       region={item.address}
-                      info={`${item.floor}층 | ${item.area}평 | ${propertyTypeMap[item.propertyType] || item.propertyType}`}
+                      info={`${item.floor}층 | ${item.area}평 | ${
+                        propertyTypeMap[item.propertyType] || item.propertyType
+                      }`}
                       memo={item.memo ?? "메모가 없습니다."}
                       price={
                         item.leaseType === "MONTHLY_RENT"

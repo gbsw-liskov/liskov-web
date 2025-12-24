@@ -1,9 +1,12 @@
 import * as I from "@/assets";
 import * as C from "./components";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import API from "@/api/axios";
+import toast from "react-hot-toast";
 
 export default function CheckListCreate() {
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -103,12 +106,11 @@ export default function CheckListCreate() {
           },
         }
       );
-
-      console.log("매물 추가 성공:", res.data);
-      alert("매물이 추가되었습니다.");
+      navigate('/checklist');
+      toast.success("매물이 추가되었습니다.");
     } catch (error) {
       console.error("매물 추가 실패:", error);
-      alert("매물 추가에 실패했습니다.");
+      toast.error("매물 추가에 실패했습니다.");
     }
   };
 

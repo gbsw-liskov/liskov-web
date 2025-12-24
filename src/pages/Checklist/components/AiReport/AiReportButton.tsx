@@ -5,7 +5,7 @@ export default function AiReportButton() {
   const navigate = useNavigate();
 
   const ButtonClicked = () => {
-    navigate("");
+    navigate("/checklist/ai/report");
   };
 
   return (

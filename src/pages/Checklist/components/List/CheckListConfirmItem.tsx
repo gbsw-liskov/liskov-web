@@ -1,24 +1,35 @@
-import { FaCheck, FaExclamation, FaExclamationTriangle, FaMinus } from "react-icons/fa";
+import {
+  FaCheck,
+  FaExclamation,
+  FaExclamationTriangle,
+  FaMinus,
+} from "react-icons/fa";
 import { useState, useEffect } from "react";
 
 interface CheckListConfirmItemProps {
   item: string;
   itemId: number;
   isConfirmed: boolean;
-  savedLevel?: 'safe' | 'warning' | 'danger' | null;
+  savedLevel?: "NORMAL" | "WARNING" | "DANGER" | null;
   savedMemo?: string;
-  onSave?: (itemId: number, level: 'safe' | 'warning' | 'danger' | null, memo: string) => void;
+  onSave?: (
+    itemId: number,
+    level: "NORMAL" | "WARNING" | "DANGER" | null,
+    memo: string
+  ) => void;
 }
 
-export default function CheckListConfirmItem({ 
-  item, 
-  itemId, 
-  isConfirmed, 
-  savedLevel, 
+export default function CheckListConfirmItem({
+  item,
+  itemId,
+  isConfirmed,
+  savedLevel,
   savedMemo,
-  onSave 
+  onSave,
 }: CheckListConfirmItemProps) {
-  const [selectedLevel, setSelectedLevel] = useState<'safe' | 'warning' | 'danger' | null>(savedLevel || null);
+  const [selectedLevel, setSelectedLevel] = useState<
+    "NORMAL" | "WARNING" | "DANGER" | null
+  >(savedLevel || null);
   const [memo, setMemo] = useState(savedMemo || "");
 
   useEffect(() => {
@@ -26,40 +37,58 @@ export default function CheckListConfirmItem({
     setMemo(savedMemo || "");
   }, [savedLevel, savedMemo]);
 
-  useEffect(() => {
-    if (isConfirmed && onSave) {
-      onSave(itemId, selectedLevel, memo);
+  const handleLevelChange = (
+    newLevel: "NORMAL" | "WARNING" | "DANGER" | null
+  ) => {
+    const level = selectedLevel === newLevel ? null : newLevel;
+    setSelectedLevel(level);
+
+    if (onSave && !isConfirmed) {
+      setTimeout(() => {
+        onSave(itemId, level, memo);
+      }, 0);
     }
-  }, [isConfirmed]);
+  };
+
+  const handleMemoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newMemo = e.target.value;
+    setMemo(newMemo);
+
+    if (onSave && !isConfirmed) {
+      setTimeout(() => {
+        onSave(itemId, selectedLevel, newMemo);
+      }, 0);
+    }
+  };
 
   const getLevelColor = () => {
     switch (selectedLevel) {
-      case 'safe':
-        return 'text-[#58CCFF]';
-      case 'warning':
-        return 'text-[#FFC107]';
-      case 'danger':
-        return 'text-[#FF4444]';
+      case "NORMAL":
+        return "text-[#58CCFF]";
+      case "WARNING":
+        return "text-[#FFC107]";
+      case "DANGER":
+        return "text-[#FF4444]";
       default:
-        return 'text-gray-500';
+        return "text-gray-500";
     }
   };
 
   const getLevelIcon = () => {
     switch (selectedLevel) {
-      case 'safe':
+      case "NORMAL":
         return (
           <div className="w-8 h-8 rounded-full bg-[#58CCFF] flex items-center justify-center">
             <FaCheck size={14} color="white" />
           </div>
         );
-      case 'warning':
+      case "WARNING":
         return (
           <div className="w-8 h-8 rounded-full bg-[#FFC107] flex items-center justify-center">
             <FaExclamation size={14} color="white" />
           </div>
         );
-      case 'danger':
+      case "DANGER":
         return (
           <div className="w-8 h-8 rounded-full bg-[#FF4444] flex items-center justify-center">
             <FaExclamationTriangle size={14} color="white" />
@@ -79,15 +108,9 @@ export default function CheckListConfirmItem({
       <div className="w-[410px] min-h-[80px]">
         <div className="flex items-start justify-between mb-2">
           <h1 className="text-[16px] font-medium text-black flex-1">{item}</h1>
-          <div className="ml-3">
-            {getLevelIcon()}
-          </div>
+          <div className="ml-10">{getLevelIcon()}</div>
         </div>
-        {memo && (
-          <p className={`text-[14px] ${getLevelColor()}`}>
-            {memo}
-          </p>
-        )}
+        {memo && <p className={`text-[14px] ${getLevelColor()}`}>{memo}</p>}
       </div>
     );
   }
@@ -95,45 +118,45 @@ export default function CheckListConfirmItem({
   return (
     <div className="w-[410px] min-h-[153px] border border-gray-200 rounded-lg p-4">
       <div className="flex items-start justify-between mb-3">
-        <h1 className="text-[16px] font-medium text-black flex-1">{item}</h1>
-        
+        <h1 className="text-[14px] font-medium text-black flex-1">{item}</h1>
+
         <div className="flex gap-2 ml-3">
           <button
-            onClick={() => setSelectedLevel(selectedLevel === 'safe' ? null : 'safe')}
+            onClick={() => handleLevelChange("NORMAL")}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-              selectedLevel === 'safe' 
-                ? 'bg-[#58CCFF]' 
-                : 'bg-[#58CCFF] opacity-30 hover:opacity-50'
+              selectedLevel === "NORMAL"
+                ? "bg-[#58CCFF]"
+                : "bg-[#58CCFF] opacity-30 hover:opacity-50"
             }`}
           >
             <FaCheck size={14} color="white" />
           </button>
           <button
-            onClick={() => setSelectedLevel(selectedLevel === 'warning' ? null : 'warning')}
+            onClick={() => handleLevelChange("WARNING")}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-              selectedLevel === 'warning' 
-                ? 'bg-[#FFC107]' 
-                : 'bg-[#FFC107] opacity-30 hover:opacity-50'
+              selectedLevel === "WARNING"
+                ? "bg-[#FFC107]"
+                : "bg-[#FFC107] opacity-30 hover:opacity-50"
             }`}
           >
             <FaExclamation size={14} color="white" />
           </button>
           <button
-            onClick={() => setSelectedLevel(selectedLevel === 'danger' ? null : 'danger')}
+            onClick={() => handleLevelChange("DANGER")}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-              selectedLevel === 'danger' 
-                ? 'bg-[#FF4444]' 
-                : 'bg-[#FF4444] opacity-30 hover:opacity-50'
+              selectedLevel === "DANGER"
+                ? "bg-[#FF4444]"
+                : "bg-[#FF4444] opacity-30 hover:opacity-50"
             }`}
           >
             <FaExclamationTriangle size={14} color="white" />
           </button>
         </div>
       </div>
-      
+
       <textarea
         value={memo}
-        onChange={(e) => setMemo(e.target.value)}
+        onChange={handleMemoChange}
         placeholder="메모"
         className="w-full h-20 px-3 py-2 text-[14px] border border-gray-300 rounded outline-none focus:border-[#58CCFF] transition-colors resize-none"
       />

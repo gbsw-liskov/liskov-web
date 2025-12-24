@@ -1,44 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import * as Image from "@/assets";
 import * as C from "./components";
 import * as P from "./Question";
 import SectionHeader from "./components/SectionHeader";
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS:number = 5;
 
-// 백엔드 요청 데이터 타입
 interface LoanFormData {
-  // Step 1: 사용자 정보
+  // 사용자 정보
   age: string;
-  isHouseholder: string; // "예" | "아니오" -> boolean 변환 필요
+  isHouseholder: string; // boolean
   familyType: string; // "SINGLE" | "HONEYMOON" | "COUPLE" | "YOUTH"
 
-  // Step 2: 소득 정보
-  annualSalary: string; // number로 변환 필요
-  monthlySalary: string; // number로 변환 필요
+  // 소득 정보
+  annualSalary: string; // number
+  monthlySalary: string; // number
   incomeType: string; // "EMPLOYEE" | "FREELANCER" | "SELF_EMPLOYED"
   incomeCategory: string; // "EARNED_INCOME" | "BUSINESS_INCOME" | "OTHER_INCOME"
 
-  // Step 3: 주거 정보
+  // 주거 정보
   rentalArea: string;
   houseType: string; // "APARTMENT" | "OFFICETEL" | "VILLA"
   rentalType: string; // "MONTHLY_RENT" | "JEONSE"
-  deposit: string; // number로 변환 필요
-  managementFee: string; // number로 변환 필요
-  availableLoan: string; // "예" | "아니오" -> boolean 변환 필요
+  deposit: string; // number
+  managementFee: string; // number
+  availableLoan: string; // boolean
 
-  // Step 4: 신용 및 금융 정보
-  creditRating: string; // number로 변환 필요 (1~6)
+  // 신용 및 금융 정보
+  creditRating: string; // number
   loanType: string; // "CREDIT" | "JEONSE" | "MORTGAGE" | "OTHER"
-  overdueRecord: string; // "예" | "아니오" -> boolean 변환 필요
+  overdueRecord: string; // boolean
 
-  // Step 5: 계약 정보
-  hasLeaseAgreement: string; // "예" | "아니오" -> boolean 변환 필요
+  // 계약 정보
+  hasLeaseAgreement: string; // boolean
   confirmed: string; // "RECEIVED" | "SCHEDULED" | "UNKNOWN"
 }
 
-const STEP_CONFIG = {
+interface StepConfigItem {
+  title: string;
+  subtitle: string;
+  description: string;
+  footerTitle: string;
+  tipTitle: string;
+  warningBox: boolean;
+}
+
+const STEP_CONFIG: Record<number, StepConfigItem> = {
   1: {
     title: "사용자 정보",
     subtitle: "기본 정보를 입력해주세요",
@@ -88,34 +96,32 @@ export default function LoanGuide() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // 전체 폼 데이터 상태 관리
   const [formData, setFormData] = useState<LoanFormData>({
-    // Step 1
+    // 사용자 정보
     age: "",
     isHouseholder: "",
     familyType: "",
-    // Step 2
+    // 소득 정보
     annualSalary: "",
     monthlySalary: "",
     incomeType: "",
     incomeCategory: "",
-    // Step 3
+    // 주거 정보
     rentalArea: "",
     houseType: "",
     rentalType: "",
     deposit: "",
     managementFee: "",
     availableLoan: "",
-    // Step 4
+    // 신용 및 금융 정보
     creditRating: "",
     loanType: "",
     overdueRecord: "",
-    // Step 5
+    // 계약 정보
     hasLeaseAgreement: "",
     confirmed: "",
   });
 
-  // 폼 데이터 변경 핸들러
   const handleFormChange = (name: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -174,6 +180,13 @@ export default function LoanGuide() {
       setCurrentStep((prev) => prev - 1);
     }
   };
+
+  useEffect(() => {
+    if (currentStep > 0) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [currentStep]);
+
 
   const renderContent = () => {
     switch (currentStep) {

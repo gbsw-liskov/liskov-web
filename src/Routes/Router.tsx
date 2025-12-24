@@ -1,10 +1,12 @@
 import { Routes, Route } from 'react-router'
 import * as R from '@/allFiles'
+import ScrollToTop from './ScrollToTop'
 
 export default function Router(){
   
   return(
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<R.Home />} />
         <Route path="/signin" element={<R.SignIn />} />
@@ -19,12 +21,8 @@ export default function Router(){
         <Route path="/checklist/add" element={<R.CheckListCreate/>} />
         <Route path="/ai/createlist" element={<R.AIGeneratedList />} />
         <Route path="/loan" element={<R.LoanGuide />} />
-        <Route path="/loan/contract" element={<R.ContractInfo />} />
-        <Route path="/loan/credit" element={<R.CreditInfo />} />
-        <Route path="/loan/earnings" element={<R.EarningsInfo />} />
-        <Route path="/loan/house" element={<R.HouseInfo />} />
-        <Route path="/loan/user" element={<R.UserInfo />} />
         <Route path="/loan/result" element={<R.LoanResult />} />
+        <Route path="/checklist/ai/report" element={<R.AnalyzeResult />} />
         <Route path="*" element={<R.NotFound />} />
       </Routes>
     </>

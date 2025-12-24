@@ -1,14 +1,23 @@
-import { useState, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
-import * as C from './components';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import * as C from "./components";
 import { CheckListSelect } from "@/allFiles";
 
 export default function Analyze() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [selectedHouse, setSelectedHouse] = useState<any>(null);
   const [showHouseSelect, setShowHouseSelect] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.selectedProperty) {
+      setSelectedHouse(location.state.selectedProperty);
+      // state를 사용한 후 즉시 제거하여 새로고침 시 데이터가 유지되지 않도록 함
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, location.pathname, navigate]);
 
   const handleDocUpload = () => {
     fileInputRef.current?.click();
@@ -34,7 +43,8 @@ export default function Analyze() {
     setShowHouseSelect(false);
   };
 
-  const handleHouseSelect = () => {
+  const handleHouseSelect = (house: any) => {
+    setSelectedHouse(house);
     setShowHouseSelect(false);
   };
 
@@ -47,9 +57,8 @@ export default function Analyze() {
         fileName: uploadedFile?.name,
         house: selectedHouse,
       };
-      
-      navigate('/analyze/result', {state : analyzeData});
-      // 추후 API 연결
+
+      navigate("/analyze/result", { state: analyzeData });
     }
   };
 
@@ -111,8 +120,7 @@ export default function Analyze() {
           <button
             onClick={handleCloseHouseSelect}
             className="absolute top-4 right-4 z-50 text-[32px] text-black hover:text-gray-600 bg-white rounded-full w-10 h-10 flex items-center justify-center"
-          >
-          </button>
+          ></button>
           <CheckListSelect
             title="매물 추가"
             buttonTitle="추가하기"
