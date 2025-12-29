@@ -13,10 +13,8 @@ export default function Banner() {
   };
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (roomSearch.trim()) {
-      navigate(`/map?search=${encodeURIComponent(roomSearch.trim())}`);
-      setRoomSearch("");
-    }
+    navigate(`?${roomSearch}`);
+    setRoomSearch("");
   };
 
   const bannerItems = [
@@ -26,7 +24,7 @@ export default function Banner() {
       data: "주변 모든 원룸을 더 쉽게<br />찾아보세요!",
       shape: 1,
       imgNumber: 1,
-      onclick: () => navigate("/map?filter=room"),
+      onclick: () => navigate(""),
     },
     {
       title: "아파트",
@@ -34,12 +32,11 @@ export default function Banner() {
       data: "회원님에게 딱 맞는 아파트<br />매물을 찾아보세요!",
       shape: 1,
       imgNumber: 2,
-      onclick: () => navigate("/map?filter=apartment"),
+      onclick: () => navigate(""),
     },
     {
       title: "대출 가이드",
-      subTitle: "나에게 딱 맞춤 대출 가이드<br />짧은 설문만으로 최적의 대출 정보를 찾아보세요!",
-      data: "",
+      subTitle: "나에게 딱 맞는 대출 가이드<br />짧은 설문만으로 최적의 대출 정보를 찾아보세요!",
       longshape: true,
       imgNumber: 3,
       onclick: () => navigate("/loan"),

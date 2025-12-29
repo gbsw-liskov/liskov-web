@@ -1,12 +1,10 @@
 import { Routes, Route } from 'react-router'
 import * as R from '@/allFiles'
-import ScrollToTop from './ScrollToTop'
 
 export default function Router(){
   
   return(
     <>
-      <ScrollToTop />
       <Routes>
         <Route path="/" element={<R.Home />} />
         <Route path="/signin" element={<R.SignIn />} />

@@ -18,21 +18,13 @@ export default function RecentItem({
 }: RecentItemProps) {
   return (
     <div
-      className="w-[542px] h-[744px] flex flex-col justify-end rounded-[5px] relative cursor-pointer overflow-hidden"
+      className="w-[542px] h-[744px] flex flex-col justify-end bg-cover bg-center rounded-[5px] z-[1] relative cursor-pointer"
+      style={{ backgroundImage: `url(${image})` }}
       onClick={onDetailClick}
     >
-      {/* 배경 이미지 */}
-      <img 
-        src={image} 
-        alt="매물 이미지"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      />
-      
-      {/* 그라데이션 오버레이 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/60 z-[1]" />
+      <div className="w-[542px] h-[744px] absolute z-[2] inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.4)_100%)]" />
 
-      {/* 컨텐츠 */}
-      <div className="pl-[66px] pb-[45px] relative z-[2]">
+      <div className="pl-[66px] pb-[45px] z-[3]">
         <p className="text-[#f2f2f2] text-[22px] font-medium">
           {houseType} {floor}
         </p>
@@ -40,7 +32,7 @@ export default function RecentItem({
         <p className="mt-[15px] text-white text-[36px] font-bold">{price}</p>
         <button
           onClick={onDetailClick}
-          className="w-[410px] h-[73px] mt-[50px] flex justify-center items-center bg-transparent border-[3px] border-white rounded-[5px] text-white font-semibold text-[22px] hover:bg-white/10 transition-colors"
+          className="w-[410px] h-[73px] mt-[50px] flex justify-center items-center bg-transparent border-[3px] border-white rounded-[5px] text-white font-semibold text-[22px]"
         >
           자세히 보기
         </button>

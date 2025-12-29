@@ -138,9 +138,6 @@ export default function CheckList() {
     );
   }
 
-  const savedKey = `checklist_saved_${checklistId}`;
-  const isSaved = localStorage.getItem(savedKey) === "true";
-
   return (
     <div className="flex pt-[50px] justify-center min-h-screen pb-20">
       <div className="w-[882px]">

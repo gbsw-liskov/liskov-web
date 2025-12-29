@@ -67,7 +67,7 @@ export default function LoanResult() {
         setResult(res.data.data);
       } catch (error) {
         console.error("대출 가이드 요청 실패:", error);
-        alert("대출 가이드 조회에 실패했습니다.");
+        alert("대출 가이드 생성에 실패했습니다.");
         navigate("/loan");
       } finally {
         setLoading(false);

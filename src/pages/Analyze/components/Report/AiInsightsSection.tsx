@@ -15,7 +15,7 @@ export default function AiInsightsSection({
   insights,
 }: AiInsightsSectionProps) {
   return (
-    <div className="w-full min-h-[300px] mt-[34px]">
+    <div className="min-w-full min-h-[200px] mt-[34px]">
       <div className="flex items-center w-full">
         <img
           className="w-[32px] h-[32px] mr-[15px]"

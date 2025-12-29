@@ -11,6 +11,7 @@ function AppWrapper() {
     "/checklist/confirm",
     "/profile/setting",
     "/checklist/ai/report",
+    "/analyze/result",
   ];
 
   const isNoHeaderPath =
