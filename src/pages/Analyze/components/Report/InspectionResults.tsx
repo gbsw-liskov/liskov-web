@@ -12,18 +12,17 @@ interface InspectionResultsProps {
 
 export default function InspectionResults({ items }: InspectionResultsProps) {
   return (
-    <div className="w-[70%] min-h-[100px] mt-[60px] rounded-[10px] bg-[#F2F2F2]">
-      <h1 className="text-black text-[18px] font-semibold mb-[18px]">
-        세부 점검 결과
-      </h1>
-      {items.map((item, index) => (
-        <DetailInspect
-          key={index}
-          level={item.level}
-          title={item.title}
-          subTitle={item.subTitle}
-        />
-      ))}
+    <div className="w-full min-h-[100px] mt-[32px] rounded-[12px] bg-white border border-[#E5E7EB] shadow-sm p-[20px] flex flex-col gap-[12px]">
+      <h1 className="text-black text-[18px] font-semibold">세부 점검 결과</h1>
+      <div className="flex flex-col gap-[14px]">
+        {items.map((item, index) => (
+          <DetailInspect
+            key={index}
+            title={item.title}
+            subTitle={item.subTitle}
+          />
+        ))}
+      </div>
     </div>
   );
 }

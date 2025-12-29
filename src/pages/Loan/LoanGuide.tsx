@@ -4,6 +4,7 @@ import * as Image from "@/assets";
 import * as C from "./components";
 import * as P from "./Question";
 import SectionHeader from "./components/SectionHeader";
+import toast from "react-hot-toast";
 
 const TOTAL_STEPS:number = 5;
 
@@ -169,7 +170,7 @@ export default function LoanGuide() {
       });
     } catch (error) {
       console.error("대출 계산 실패:", error);
-      alert("대출 계산에 실패했습니다. 다시 시도해주세요.");
+      toast.error("대출 계산에 실패했습니다. 다시 시도해주세요.");
     }
   };
 

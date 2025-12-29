@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AILoading } from "@/components";
 import API from "@/api/axios";
 import * as C from "./components";
+import toast from "react-hot-toast";
 
 interface LoanRequestData {
   age: number;
@@ -55,7 +56,6 @@ export default function LoanResult() {
 
     const fetchLoanResult = async () => {
       const token = localStorage.getItem("accessToken");
-      console.log(loanRequestData);
       try {
         const res = await API.post("/api/loan", loanRequestData, {
           headers: {
@@ -63,11 +63,10 @@ export default function LoanResult() {
           },
         });
 
-        console.log("대출 가이드 결과:", res.data);
         setResult(res.data.data);
       } catch (error) {
         console.error("대출 가이드 요청 실패:", error);
-        alert("대출 가이드 생성에 실패했습니다.");
+        toast.error("대출 가이드 생성에 실패했습니다.");
         navigate("/loan");
       } finally {
         setLoading(false);

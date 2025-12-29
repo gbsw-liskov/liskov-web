@@ -2,9 +2,9 @@ interface ScoreSummaryProps {
   score: number;
   status: string;
   description: string;
-  normalCount: number;
-  warningCount: number;
-  dangerCount: number;
+  normalCount?: number;
+  warningCount?: number;
+  dangerCount?: number;
 }
 
 export default function ScoreSummary({
@@ -22,7 +22,7 @@ export default function ScoreSummary({
   };
 
   return (
-    <div className="flex flex-col items-center w-full min-h-[426px] mt-12">
+    <div className="flex flex-col items-center w-full min-h-[326px] mt-12">
       <p className="text-[20px] font-medium text-[#757575] mb-[18px]">
         총 점수
       </p>
@@ -43,28 +43,32 @@ export default function ScoreSummary({
         ))}
       </p>
 
-      <div className="w-full min-h-[130px] flex justify-between items-center px-[275px] py-[30px]">
-        <div className="w-[40px] h-[70px] flex flex-col justify-between">
-          <h1 className="text-[#58CCFF] text-[44px] font-bold">
-            {normalCount}
-          </h1>
-          <p className="text-[#757575] text-[16px] font-medium">양호</p>
-        </div>
+      {typeof normalCount === "number" &&
+        typeof warningCount === "number" &&
+        typeof dangerCount === "number" && (
+          <div className="w-full min-h-[130px] flex justify-between items-center px-[275px] py-[30px]">
+            <div className="w-[40px] h-[70px] flex flex-col justify-between">
+              <h1 className="text-[#58CCFF] text-[44px] font-bold">
+                {normalCount}
+              </h1>
+              <p className="text-[#757575] text-[16px] font-medium">양호</p>
+            </div>
 
-        <div className="w-[40px] h-[70px] flex flex-col justify-between">
-          <h1 className="text-[#FEB53C] text-[44px] font-bold">
-            {warningCount}
-          </h1>
-          <p className="text-[#757575] text-[16px] font-medium">주의</p>
-        </div>
+            <div className="w-[40px] h-[70px] flex flex-col justify-between">
+              <h1 className="text-[#FEB53C] text-[44px] font-bold">
+                {warningCount}
+              </h1>
+              <p className="text-[#757575] text-[16px] font-medium">주의</p>
+            </div>
 
-        <div className="w-[40px] h-[70px] flex flex-col justify-between">
-          <h1 className="text-[#ED5E5E] text-[44px] font-bold">
-            {dangerCount}
-          </h1>
-          <p className="text-[#757575] text-[16px] font-medium">심각</p>
-        </div>
-      </div>
+            <div className="w-[40px] h-[70px] flex flex-col justify-between">
+              <h1 className="text-[#ED5E5E] text-[44px] font-bold">
+                {dangerCount}
+              </h1>
+              <p className="text-[#757575] text-[16px] font-medium">심각</p>
+            </div>
+          </div>
+        )}
     </div>
   );
 }

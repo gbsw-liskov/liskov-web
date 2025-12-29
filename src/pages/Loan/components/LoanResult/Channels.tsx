@@ -13,7 +13,7 @@ export default function Channels({ channels }: ChannelsProps) {
   return (
     <div className="w-full min-h-[252px] p-[25px] mb-[4px]">
       <div className="w-full">
-        <p className="text-black text-[16px] font-semibold flex">
+        <p className="text-black text-[18px] font-semibold flex">
           신청 가능 채널
         </p>
       </div>
@@ -21,14 +21,14 @@ export default function Channels({ channels }: ChannelsProps) {
         {channels.map((channel, index) => (
           <div
             key={index}
-            className="min-w-full h-[63px] p-[12px] flex items-center mb-[13px]"
+            className="min-w-full min-h-[63px] p-[12px] flex items-center mb-[13px]"
           >
             <div className="w-[22px] h-[22px] mr-[12px]">
               <CiCircleCheck color="#58CCFF" size={25} />
             </div>
             <div className="min-w-[136px] min-h-[39px]">
-              <p className="text-[13px] text-black">{channel.title}</p>
-              <p className="text-[11px] text-[#757575]">{channel.content}</p>
+              <p className="text-[15px] text-black">{channel.title}</p>
+              <p className="text-[13px] text-[#757575]">{channel.content}</p>
             </div>
           </div>
         ))}

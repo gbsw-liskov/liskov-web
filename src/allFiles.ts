@@ -19,5 +19,6 @@ import UserInfo from './pages/Loan/Question/UserInfo';
 import LoanResult from './pages/Loan/LoanResult';
 import Setting from './pages/auth/Setting';
 import AnalyzeResult from './pages/Analyze/AnalyzeResult';
+import Favorite from './pages/Favorite/Favorite';
 
-export { SignIn, SignUp, Profile, Setting, Home, Analyze, AnalyzeResult, CheckList, CheckListMain, CheckListCreate, CheckListSelect, MapPage, AIGeneratedList, NotFound, LoanGuide, ContractInfo, UserInfo, HouseInfo, CreditInfo, EarningsInfo, LoanResult }
+export { SignIn, SignUp, Profile, Setting, Home, Analyze, AnalyzeResult, CheckList, CheckListMain, CheckListCreate, CheckListSelect, MapPage, AIGeneratedList, NotFound, LoanGuide, ContractInfo, UserInfo, HouseInfo, CreditInfo, EarningsInfo, LoanResult, Favorite }

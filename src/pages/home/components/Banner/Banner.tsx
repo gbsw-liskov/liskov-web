@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import BannerItem from "./BannerItem";
 import SlideMenu from './SlideMenu';
+import toast from "react-hot-toast";
 
 export default function Banner() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function Banner() {
       data: "주변 모든 원룸을 더 쉽게<br />찾아보세요!",
       shape: 1,
       imgNumber: 1,
-      onclick: () => navigate(""),
+      onclick: () => navigate("/map?type=원룸투룸"),
     },
     {
       title: "아파트",
@@ -32,19 +33,27 @@ export default function Banner() {
       data: "회원님에게 딱 맞는 아파트<br />매물을 찾아보세요!",
       shape: 1,
       imgNumber: 2,
-      onclick: () => navigate(""),
+      onclick: () => navigate("/map?type=아파트"),
     },
     {
       title: "대출 가이드",
       subTitle: "나에게 딱 맞는 대출 가이드<br />짧은 설문만으로 최적의 대출 정보를 찾아보세요!",
       longshape: true,
       imgNumber: 3,
-      onclick: () => navigate("/loan"),
+      onclick: () => {
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
+          toast.error("로그인이 필요합니다.");
+          navigate("/signin");
+          return;
+        }
+        navigate("/loan");
+      },
     },
   ];
 
   return (
-    <div className="h-[545px] w-full mt-20 bg-[#F4FCFF] px52">
+    <div className="h-[545px] w-full mt-20 bg-[#ECFAFF] px52">
       <div className="w-[798px] pt-10 h-18 mx-auto">
         <form
           onSubmit={handleSearch}

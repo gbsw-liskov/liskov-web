@@ -15,7 +15,7 @@ export default function AiInsightsSection({
   insights,
 }: AiInsightsSectionProps) {
   return (
-    <div className="min-w-full min-h-[200px] mt-[34px]">
+    <div className="w-full mt-[34px] bg-[#F7FAFF] rounded-[12px] p-[24px] shadow-sm flex flex-col gap-[14px]">
       <div className="flex items-center w-full">
         <img
           className="w-[32px] h-[32px] mr-[15px]"
@@ -26,14 +26,16 @@ export default function AiInsightsSection({
           핵심 인사이트
         </h1>
       </div>
-      {insights.map((insight, index) => (
-        <InsightCard
-          key={index}
-          type={insight.type}
-          title={insight.title}
-          content={insight.content}
-        />
-      ))}
+      <div className="flex flex-col gap-[12px]">
+        {insights.map((insight, index) => (
+          <InsightCard
+            key={index}
+            type={insight.type}
+            title={insight.title}
+            content={insight.content}
+          />
+        ))}
+      </div>
     </div>
   );
 }

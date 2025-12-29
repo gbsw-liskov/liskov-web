@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { userData, logout } = useProfile();
+  const { userData, confirmLogout } = useProfile();
   
   const goToSetting = () => {navigate('/profile/setting');}
 
@@ -23,7 +23,7 @@ export default function Profile() {
         <C.ProfileInfoSection userData={userData} />
         <div className="mt-[50px] flex justify-center items-center">
           <button
-            onClick={logout}
+            onClick={confirmLogout}
             type="button"
             className="border-none bg-none cursor-pointer text-[#ED5E5E] text-[18px] font-semibold"
           >

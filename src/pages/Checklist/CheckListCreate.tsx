@@ -65,25 +65,23 @@ export default function CheckListCreate() {
       !formData.leaseType ||
       !formData.deposit
     ) {
-      alert("필수 항목을 모두 입력해주세요.");
+      toast.error("필수 항목을 모두 입력해주세요.");
       return;
     }
     if (formData.leaseType === "월세" && !formData.monthlyRent) {
-      alert("필수 항목을 모두 입력해주세요.");
+      toast.error("필수 항목을 모두 입력해주세요.");
       return;
     }
 
     const mappedPropertyType = propertyTypeMap[formData.propertyType];
     if (!mappedPropertyType) {
-      alert(
-        "주택형태는 아파트, 빌라, 오피스텔, 원룸, 기타 중 하나를 입력해주세요."
-      );
+      toast.error("주택형태는 아파트, 빌라, 오피스텔, 원룸, 기타 중 하나를 입력해주세요.");
       return;
     }
 
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await API.post(
+      await API.post(
         "/api/properties",
         {
           name: formData.name,

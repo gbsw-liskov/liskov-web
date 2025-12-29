@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router'
 import * as R from '@/allFiles'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function Router(){
   
@@ -9,18 +10,19 @@ export default function Router(){
         <Route path="/" element={<R.Home />} />
         <Route path="/signin" element={<R.SignIn />} />
         <Route path="/signup" element={<R.SignUp />} />
-        <Route path="/profile" element={<R.Profile />} />
-        <Route path="/profile/setting" element={<R.Setting/>} />
-        <Route path="/analyze" element={<R.Analyze />} />
-        <Route path="/analyze/result" element={<R.AnalyzeResult />} />
+        <Route path="/profile" element={<ProtectedRoute><R.Profile /></ProtectedRoute>} />
+        <Route path="/profile/setting" element={<ProtectedRoute><R.Setting/></ProtectedRoute>} />
+        <Route path="/favorite" element={<ProtectedRoute><R.Favorite /></ProtectedRoute>} />
+        <Route path="/analyze" element={<ProtectedRoute><R.Analyze /></ProtectedRoute>} />
+        <Route path="/analyze/result" element={<ProtectedRoute><R.AnalyzeResult /></ProtectedRoute>} />
         <Route path="/map" element={<R.MapPage />} />
-        <Route path="/checklist/confirm" element={<R.CheckList /> } />
-        <Route path="/checklist" element={<R.CheckListMain />} />
-        <Route path="/checklist/add" element={<R.CheckListCreate/>} />
-        <Route path="/ai/createlist" element={<R.AIGeneratedList />} />
-        <Route path="/loan" element={<R.LoanGuide />} />
-        <Route path="/loan/result" element={<R.LoanResult />} />
-        <Route path="/checklist/ai/report" element={<R.AnalyzeResult />} />
+        <Route path="/checklist/confirm" element={<ProtectedRoute><R.CheckList /></ProtectedRoute> } />
+        <Route path="/checklist" element={<ProtectedRoute><R.CheckListMain /></ProtectedRoute>} />
+        <Route path="/checklist/add" element={<ProtectedRoute><R.CheckListCreate/></ProtectedRoute>} />
+        <Route path="/ai/createlist" element={<ProtectedRoute><R.AIGeneratedList /></ProtectedRoute>} />
+        <Route path="/loan" element={<ProtectedRoute><R.LoanGuide /></ProtectedRoute>} />
+        <Route path="/loan/result" element={<ProtectedRoute><R.LoanResult /></ProtectedRoute>} />
+        <Route path="/checklist/ai/report" element={<ProtectedRoute><R.AnalyzeResult /></ProtectedRoute>} />
         <Route path="*" element={<R.NotFound />} />
       </Routes>
     </>

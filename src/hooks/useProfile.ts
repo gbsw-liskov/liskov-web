@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createElement } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { deleteUserAPI, getProfileAPI, updatePasswordAPI, updateUsernameAPI } from "@/api/auth.api";
@@ -119,9 +119,42 @@ export default function useProfile() {
     toast.success("로그아웃 되었습니다.");
   };
 
+  const confirmLogout = () => {
+    toast(
+      (t) =>
+        createElement(
+          "div",
+          { className: "flex items-center gap-3" },
+          createElement("span", null, "정말 로그아웃 하시겠습니까?"),
+          createElement(
+            "button",
+            {
+              onClick: () => {
+                toast.dismiss(t.id);
+                logout();
+              },
+              className:
+                "px-3 py-1 rounded bg-[#58CCFF] text-white text-sm font-semibold",
+            },
+            "예",
+          ),
+          createElement(
+            "button",
+            {
+              onClick: () => toast.dismiss(t.id),
+              className:
+                "px-3 py-1 rounded border border-[#E5E7EB] text-sm font-semibold",
+            },
+            "아니오",
+          ),
+        ),
+      { duration: 5000 },
+    );
+  };
+
   useEffect(() => {
     getProfile();
   }, []);
 
-  return { userData, logout, getName, updateUserName, updatePassword, deleteUser };
+  return { userData, logout, confirmLogout, getName, updateUserName, updatePassword, deleteUser };
 }

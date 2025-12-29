@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CheckListSelect from "./CheckListSelect";
 import API from "@/api/axios";
+import toast from "react-hot-toast";
 
 interface Checklist {
   name: string;
@@ -11,6 +12,19 @@ interface Checklist {
   createdAt: string;
   image?: string;
 }
+
+const FALLBACK_IMAGES = [
+  "/assets/property/다운로드 (1).jpeg",
+  "/assets/property/다운로드 (2).jpeg",
+  "/assets/property/다운로드 (3).jpeg",
+  "/assets/property/다운로드 (4).jpeg",
+  "/assets/property/다운로드 (5).jpeg",
+  "/assets/property/다운로드 (6).jpeg",
+  "/assets/property/다운로드 (7).jpeg",
+  "/assets/property/다운로드 (8).jpeg",
+  "/assets/property/다운로드 (9).jpeg",
+  "/assets/property/다운로드 (10).jpeg",
+];
 
 export default function ChecklistMain() {
   const [listSelect, setListSelect] = useState(false);
@@ -29,6 +43,7 @@ export default function ChecklistMain() {
       setChecklists(res.data.data || []);
     } catch (e) {
       console.error(e);
+      toast.error("체크리스트를 불러오지 못했습니다.");
       setChecklists([]);
     } finally {
       setLoading(false);
@@ -67,7 +82,11 @@ export default function ChecklistMain() {
             {checklists.map((checklist) => (
               <CheckListMenu
                 key={checklist.checklistId}
-                image={checklist.image || null}
+                image={
+                  checklist.image ??
+                  FALLBACK_IMAGES[checklist.propertyId % FALLBACK_IMAGES.length] ??
+                  FALLBACK_IMAGES[0]
+                }
                 title={checklist.name}
                 date={checklist.createdAt.split("T")[0]}
                 onclick={() => onClickedHouse(checklist.checklistId)}

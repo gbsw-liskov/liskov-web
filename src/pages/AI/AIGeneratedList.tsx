@@ -154,7 +154,7 @@ export default function AIGeneratedList() {
       navigate("/checklist");
     } catch (error) {
       console.error("체크리스트 저장을 실패했습니다", error);
-      alert("체크리스트 저장을 실패했습니다.");
+      toast.error("체크리스트 저장을 실패했습니다.");
     }
   };
 

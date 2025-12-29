@@ -7,7 +7,10 @@ export default function PassivityAddButton() {
     navigate("/checklist/add");
   };
   return (
-    <button onClick={passivityAdd} className="fixed bottom-[31px] block ml-auto mr-[30px] w-[70px] h-[70px] rounded-full bg-[#58CCFF] border-0 flex items-center justify-center">
+    <button
+      onClick={passivityAdd}
+      className="fixed bottom-[24px] right-[24px] z-[2000] w-[70px] h-[70px] rounded-full bg-[#58CCFF] border-0 flex items-center justify-center shadow-lg hover:bg-[#45b8eb] transition-colors"
+    >
       <FaPlus className="text-white text-2xl" />
     </button>
   );

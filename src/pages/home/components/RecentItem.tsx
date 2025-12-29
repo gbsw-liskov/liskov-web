@@ -19,7 +19,7 @@ export default function RecentItem({
   return (
     <div
       className="w-[542px] h-[744px] flex flex-col justify-end bg-cover bg-center rounded-[5px] z-[1] relative cursor-pointer"
-      style={{ backgroundImage: `url(${image})` }}
+      style={{ backgroundImage: `url("${encodeURI(image)}")` }}
       onClick={onDetailClick}
     >
       <div className="w-[542px] h-[744px] absolute z-[2] inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.4)_100%)]" />
